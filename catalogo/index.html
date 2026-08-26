@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+  <meta content="Cat&aacute;logo de produtos MaxCompany" name="description"/>
+  <meta content="#777777" name="theme-color"/>
+  <title>
+   Cat&aacute;logo de Produtos - MaxCompany
+  </title>
+  <!-- ============================================================
+         FAVICON
+         ============================================================ -->
+  <link href="./assets/favicon/favicon-32x32.png?v=2" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="./assets/favicon/favicon-16x16.png?v=2" rel="icon" sizes="16x16" type="image/png"/>
+  <link href="./assets/favicon/apple-touch-icon.png?v=2" rel="apple-touch-icon" sizes="180x180"/>
+  <link href="./assets/favicon/site.webmanifest?v=2" rel="manifest"/>
+  <!-- CSS -->
+  <link href="./styles.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <!-- ============================================================
+         LOADING INICIAL
+         ============================================================ -->
+  <div aria-label="Carregando cat&aacute;logo MaxCompany" class="catalog-loader" id="catalog-loader">
+   <div class="loader-content">
+    <img alt="MaxCompany" class="loader-maxcompany-logo" src="assets/maxcompany-loader.png"/>
+    <img alt="&Agrave; frente do seu tempo." class="loader-slogan" src="assets/maxcompany-slogan.png"/>
+    <div class="loader-text">
+     Carregando o cat&aacute;logo
+    </div>
+    <div aria-hidden="true" class="loader-companies">
+     <div class="loader-company loader-company-1">
+      <img alt="" src="assets/maxplast.png"/>
+     </div>
+     <div class="loader-company loader-company-2">
+      <img alt="" src="assets/maxsafety.png"/>
+     </div>
+     <div class="loader-company loader-company-3">
+      <img alt="" src="assets/maxsupply.png"/>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- ============================================================
+         APLICAÇÃO
+         ============================================================ -->
+  <div class="app">
+   <!-- ========================================================
+             BOTÃO DE DOWNLOAD
+             ======================================================== -->
+   <a aria-label="Baixar cat&aacute;logo em PDF" class="download" download="" href="catalogo.pdf">
+    Baixar PDF
+   </a>
+   <!-- ========================================================
+             LEITOR
+             ======================================================== -->
+   <main>
+    <!-- ====================================================
+                 ÁREA DO FLIPBOOK
+                 ==================================================== -->
+    <section aria-label="Leitor do cat&aacute;logo" class="reader">
+     <div class="book-wrap">
+      <div aria-label="Cat&aacute;logo MaxCompany em formato flipbook" class="flipbook" id="flipbook" role="document">
+      </div>
+     </div>
+    </section>
+    <!-- ====================================================
+                 MINIATURAS
+                 ==================================================== -->
+    <aside aria-label="Miniaturas das p&aacute;ginas" class="thumbnails">
+     <div class="thumb-list" id="thumbs">
+     </div>
+    </aside>
+   </main>
+  </div>
+  <!-- ============================================================
+         JAVASCRIPT
+         ============================================================ -->
+  <script src="jquery.js">
+  </script>
+  <script src="turn.js">
+  </script>
+  <script src="config.js">
+  </script>
+  <script src="app.js">
+  </script>
+ </body>
+</html>

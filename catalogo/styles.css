@@ -1,0 +1,530 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+/* ============================================================
+   RESET / BASE
+   ============================================================ */ * {
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #777;
+  color: #222;
+}
+body {
+  overflow: hidden;
+}
+/* ============================================================
+   APLICAÇÃO
+   ============================================================ */ .app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #777;
+}
+/* ============================================================
+   ÁREA PRINCIPAL
+   ============================================================ */ main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* ============================================================
+   LEITOR
+   ============================================================ */ .reader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+/* ============================================================
+   ÁREA DO LIVRO
+   ============================================================ */ .book-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 18px 42px 18px 18px;
+  overflow: hidden;
+}
+/* ============================================================
+   FLIPBOOK
+   ============================================================ */ .flipbook {
+  position: relative;
+  transform-origin: center center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  touch-action: pan-y;
+  will-change: transform;
+  transform-origin: center center;
+}
+/* ============================================================
+   DOBRA CENTRAL DO LIVRO
+   ============================================================ */ .flipbook::before {
+  content: "";
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 24px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient( 90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 15%, rgba(0, 0, 0, 0.28) 42%, rgba(255, 255, 255, 0.18) 50%, rgba(0, 0, 0, 0.30) 60%, rgba(0, 0, 0, 0.06) 85%, rgba(0, 0, 0, 0) 100% );
+  filter: blur(1px);
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+.flipbook::after {
+  content: "";
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient( 90deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.30), rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.02) );
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.28);
+  opacity: 0.72;
+}
+/* ============================================================
+   PÁGINAS
+   ============================================================ */ .catalog-page {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* ============================================================
+   SOMBRA NAS LATERAIS
+   ============================================================ */ .catalog-page.page-left::after, .catalog-page.page-right::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  width: 18%;
+  pointer-events: none;
+}
+.catalog-page.page-left::after {
+  right: 0;
+  background: linear-gradient( 90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.14) );
+}
+.catalog-page.page-right::after {
+  left: 0;
+  background: linear-gradient( 90deg, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0) );
+}
+/* ============================================================
+   IMAGENS DAS PÁGINAS
+   ============================================================ */ .catalog-page img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-user-drag: none;
+}
+/* ============================================================
+   BOTÃO DE DOWNLOAD
+   ============================================================ */ .download {
+  position: absolute;
+  z-index: 50;
+  top: 12px;
+  right: 12px;
+  padding: 7px 11px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #333;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+.download:hover {
+  background: #fff;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.20);
+}
+.download:active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+/* ============================================================
+   MINIATURAS
+   ============================================================ */ .thumbnails {
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  width: 92px;
+  min-width: 92px;
+  height: 100%;
+  background: transparent;
+  border: 0;
+}
+/* ============================================================
+   LISTA DE MINIATURAS
+   ============================================================ */ .thumb-list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0;
+  gap: 8px;
+  padding: 62px 7px 14px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+/* ============================================================
+   SCROLLBAR DAS MINIATURAS
+   ============================================================ */ .thumb-list::-webkit-scrollbar {
+  width: 4px;
+}
+.thumb-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thumb-list::-webkit-scrollbar-thumb {
+  background: rgba(35, 35, 35, 0.35);
+  border-radius: 8px;
+}
+/* ============================================================
+   MINIATURA
+   ============================================================ */ .thumb {
+  position: relative;
+  display: block;
+  width: 78px;
+  height: 108px;
+  min-height: 108px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
+  background: #eee;
+  cursor: pointer;
+  opacity: 0.82;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.20);
+  transition: opacity 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.thumb:hover {
+  opacity: 1;
+  border-color: #fff;
+  box-shadow: 0 2px 9px rgba(0, 0, 0, 0.28);
+}
+/* ============================================================
+   MINIATURA ATIVA
+   ============================================================ */ .thumb.active {
+  opacity: 1;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 3px 11px rgba(0, 0, 0, 0.30);
+}
+/* ============================================================
+   IMAGEM DA MINIATURA
+   ============================================================ */ .thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* ============================================================
+   NÚMERO DA PÁGINA
+   ============================================================ */ .thumb-number {
+  position: absolute;
+  z-index: 2;
+  top: 4px;
+  left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 3px 5px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.68);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+/* ============================================================
+   LOADING INICIAL — MAXCOMPANY PREMIUM
+   ============================================================ */ .catalog-loader {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #282828;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+/* Marca d'água gigante: a identidade visual fica presente sem competir
+   com o conteúdo central. */ .catalog-loader::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: min(780px, 92vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: url("assets/maxcompany-watermark.png") center / contain no-repeat;
+  opacity: 0.085;
+  filter: grayscale(1) brightness(1.12);
+  pointer-events: none;
+}
+/* Um segundo nível extremamente sutil de profundidade, sem criar círculo
+   ou halo atrás da marca principal. */ .catalog-loader::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient( circle at center, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0) 42% );
+  pointer-events: none;
+}
+.catalog-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(360px, 88vw);
+  text-align: center;
+  animation: loaderFadeIn 0.8s ease forwards;
+}
+.loader-maxcompany-logo {
+  display: block;
+  width: min(245px, 62vw);
+  height: auto;
+  max-height: 82px;
+  object-fit: contain;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.24));
+}
+.loader-slogan {
+  display: block;
+  width: min(215px, 55vw);
+  height: auto;
+  margin: 0 auto 34px;
+  object-fit: contain;
+  opacity: .96;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.18));
+}
+.loader-text {
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.8px;
+  text-transform: none;
+}
+/* As três empresas são os próprios pontos do loading.
+   A sequência azul → verde → vermelho indica o progresso visual. */ .loader-companies {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 52px;
+}
+.loader-company {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  opacity: .30;
+  transform: translate3d(0, 0, 0) scale(.88);
+  animation: loaderCompanyPulse 2.25s cubic-bezier(.45, 0, .55, 1) infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center;
+}
+.loader-company img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 7px 16px rgba(0,0,0,.22));
+}
+.loader-company-1 {
+  animation-delay: 0s;
+}
+.loader-company-2 {
+  animation-delay: .75s;
+}
+.loader-company-3 {
+  animation-delay: 1.5s;
+}
+/* Pulso contínuo e suave: cada logo assume o destaque sem
+   saltos bruscos, criando uma onda visual entre as três marcas. */ @keyframes loaderCompanyPulse {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(.88);
+    opacity: .30;
+  }
+  20% {
+    transform: translate3d(0, -1px, 0) scale(.94);
+    opacity: .48;
+  }
+  42% {
+    transform: translate3d(0, -2px, 0) scale(1.06);
+    opacity: 1;
+  }
+  58% {
+    transform: translate3d(0, -1px, 0) scale(1.02);
+    opacity: .88;
+  }
+  76% {
+    transform: translate3d(0, 0, 0) scale(.94);
+    opacity: .52;
+  }
+}
+@keyframes loaderFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Loading no celular */ @media (max-width: 760px) {
+  .catalog-loader::before {
+    width: min(620px, 125vw);
+    opacity: .075;
+  }
+  .loader-content {
+    width: min(320px, 84vw);
+  }
+  .loader-maxcompany-logo {
+    width: min(215px, 64vw);
+    max-height: 72px;
+    margin-bottom: 10px;
+  }
+  .loader-slogan {
+    width: min(190px, 58vw);
+    margin-bottom: 28px;
+  }
+  .loader-text {
+    margin-bottom: 16px;
+    font-size: 10px;
+    letter-spacing: 2.4px;
+  }
+  .loader-companies {
+    gap: 12px;
+  }
+  .loader-company {
+    width: 40px;
+    height: 40px;
+  }
+  /*
+       MOBILE: o catálogo é o protagonista.
+       As miniaturas ficam sobrepostas na extrema direita,
+       ocupando apenas uma faixa estreita e sem reservar largura
+       do leitor.
+    */ main {
+    position: relative;
+  }
+  .reader {
+    width: 100%;
+    height: 100%;
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .book-wrap {
+    width: 100%;
+    height: 100%;
+    padding: 8px 8px 8px 8px;
+  }
+  .thumbnails {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    right: 3px;
+    bottom: 0;
+    width: 46px;
+    min-width: 46px;
+    height: 100%;
+    background: transparent;
+    pointer-events: auto;
+    transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+  }
+  .thumb-list {
+    align-items: center;
+    gap: 5px;
+    padding: 54px 2px 8px;
+  }
+  .thumb {
+    width: 40px;
+    height: 56px;
+    min-height: 56px;
+    border-radius: 2px;
+    border-width: 1px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.20);
+  }
+  .thumb.active {
+    border-width: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.24);
+  }
+  .thumb-number {
+    top: 2px;
+    left: 2px;
+    min-width: 14px;
+    height: 14px;
+    padding: 2px 3px;
+    border-radius: 7px;
+    font-size: 7px;
+  }
+  .reader.is-zooming .thumbnails, .reader.is-zoomed .thumbnails {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(10px);
+  }
+  /*
+       No celular em pé o catálogo é uma página única.
+       A faixa central que simulava a dobra não faz sentido aqui
+       e criava uma linha escura exatamente no meio da página.
+    */ @media (orientation: portrait) {
+    .flipbook::before, .flipbook::after {
+      display: none;
+    }
+  }
+}
+/* ============================================================
+   NAVEGAÇÃO POR CLIQUE
+   ============================================================ */ /* Toda a área do leitor indica que pode ser usada para navegar. */ .reader {
+  cursor: pointer;
+}
+/* Mantém o comportamento visual do flipbook enquanto o mouse está sobre ele. */ .flipbook, .catalog-page {
+  cursor: pointer;
+}
+/* Elementos que possuem ação própria continuam com seus cursores. */ .download, .thumb {
+  cursor: pointer;
+}
