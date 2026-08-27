@@ -1,14 +1,5 @@
-/*
- * MAXCOMPANY — CSS ORGANIZADO
- *
- * Versão limpa do CSS atual.
- * - Remove comentários de histórico/AJUSTES.
- * - Consolida regras exatamente duplicadas dentro do mesmo contexto.
- * - Preserva os seletores, valores e breakpoints do CSS atual.
- * - Não altera HTML ou JavaScript.
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
 :root {
   --navy: #07111c;
   --navy-2: #0b1826;
@@ -33,9 +24,11 @@
 * {
   box-sizing: border-box;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   margin: 0;
   background: var(--white);
@@ -44,29 +37,37 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 h1, h2, h3 {
   text-wrap: balance;
 }
+
 body.menu-open {
   overflow: hidden;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 button, input, textarea {
   font: inherit;
 }
+
 button {
   cursor: pointer;
 }
+
 img {
   max-width: 100%;
 }
+
 .shell {
   width: min(var(--shell), calc(100% - 96px));
   margin-inline: auto;
 }
+
 .eyebrow {
   display: flex;
   align-items: center;
@@ -77,21 +78,26 @@ img {
   letter-spacing: .2em;
   text-transform: uppercase;
 }
+
 .eyebrow > span {
   display: inline-block;
   width: auto;
   height: auto;
   background: none;
 }
+
 .eyebrow-light {
   color: #c7d1da;
 }
+
 .eyebrow-light > span {
   background: var(--amber);
 }
+
 h1, h2, h3, p {
   margin-top: 0;
 }
+
 .text-link {
   display: inline-flex;
   align-items: center;
@@ -102,16 +108,20 @@ h1, h2, h3, p {
   font-weight: 700;
   transition: gap .2s ease;
 }
+
 .text-link:hover {
   gap: 18px;
 }
+
 .text-link span {
   font-size: 16px;
   font-weight: 400;
 }
+
 .light-link {
   color: #fff;
 }
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -124,24 +134,30 @@ h1, h2, h3, p {
   font-weight: 700;
   transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
 }
+
 .button:hover {
   transform: translateY(-2px);
 }
+
 .button span {
   font-size: 16px;
   font-weight: 400;
 }
+
 .button-light {
   background: #fff;
   color: #0b1117;
 }
+
 .button-light:hover {
   background: #edf4fa;
 }
+
 .button-dark {
   background: #0b1117;
   color: #fff;
 }
+
 .button-dark:hover {
   background: var(--blue);
 }
@@ -152,12 +168,14 @@ h1, h2, h3, p {
   color: #fff;
   transition: background .3s ease, box-shadow .3s ease;
 }
+
 .site-header.is-scrolled {
   position: fixed;
   background: rgba(5,10,15,.94);
   backdrop-filter: blur(18px);
   box-shadow: 0 15px 50px rgba(0,0,0,.22);
 }
+
 .utility-bar {
   height: 30px;
   background: #05080b;
@@ -165,12 +183,14 @@ h1, h2, h3, p {
   font-size: 9px;
   letter-spacing: .15em;
 }
+
 .utility-inner {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .nav-inner {
   min-height: 84px;
   display: flex;
@@ -178,34 +198,41 @@ h1, h2, h3, p {
   gap: 40px;
   border-bottom: 1px solid rgba(255,255,255,.16);
 }
+
 .brand {
   width: 176px;
   flex: 0 0 auto;
 }
+
 .brand img {
   display: block;
   width: 100%;
   height: auto;
 }
+
 .desktop-nav {
   display: flex;
   align-items: center;
   gap: 25px;
   margin-left: auto;
 }
+
 .desktop-nav a {
   color: #d6dee5;
   font-size: 11px;
   transition: color .2s ease;
   white-space: nowrap;
 }
+
 .desktop-nav a:hover {
   color: #fff;
 }
+
 .desktop-nav a.is-current {
   color: #fff;
   position: relative;
 }
+
 .desktop-nav a.is-current::after {
   content: "";
   position: absolute;
@@ -215,10 +242,12 @@ h1, h2, h3, p {
   height: 2px;
   background: var(--amber);
 }
+
 .desktop-nav a.is-catalog-current {
   color: #fff;
   position: relative;
 }
+
 .desktop-nav a.is-catalog-current::after {
   content: "";
   position: absolute;
@@ -228,18 +257,23 @@ h1, h2, h3, p {
   height: 2px;
   background: #fff;
 }
+
 .mobile-nav a.is-current {
   color: #fff;
 }
+
 .mobile-nav a.is-current span {
   color: var(--amber);
 }
+
 .mobile-nav a.is-catalog-current {
   color: #fff;
 }
+
 .mobile-nav a.is-catalog-current span {
   color: #fff;
 }
+
 .header-cta {
   display: inline-flex;
   align-items: center;
@@ -250,13 +284,16 @@ h1, h2, h3, p {
   font-weight: 700;
   transition: background .2s ease, color .2s ease;
 }
+
 .header-cta:hover {
   background: #fff;
   color: #0a1118;
 }
+
 .header-cta span {
   font-size: 14px;
 }
+
 .menu-button {
   display: none;
   border: 0;
@@ -265,6 +302,7 @@ h1, h2, h3, p {
   height: 40px;
   margin-left: auto;
 }
+
 .menu-button span {
   display: block;
   width: 23px;
@@ -273,12 +311,15 @@ h1, h2, h3, p {
   margin: 7px auto;
   transition: transform .2s ease;
 }
+
 .site-header.is-open .menu-button span:first-child {
   transform: translateY(4px) rotate(45deg);
 }
+
 .site-header.is-open .menu-button span:last-child {
   transform: translateY(-4px) rotate(-45deg);
 }
+
 .mobile-panel {
   display: none;
 }

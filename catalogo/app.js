@@ -77,17 +77,11 @@ const loaderProgressBar = document.getElementById('loader-progress-bar');
  */
 function initLoader() {
     const duration = CONFIG.loader.duration;
-
     const startTime = performance.now();
 
     function updateLoader(currentTime) {
         const elapsed = currentTime - startTime;
-
-        const progress = Math.min(
-            elapsed / duration,
-            1
-        );
-
+        const progress = Math.min(elapsed / duration, 1);
         const percentage = Math.floor(progress * 100);
 
         if (loaderPercentage) {
@@ -104,17 +98,12 @@ function initLoader() {
     }
 
     requestAnimationFrame(updateLoader);
-
-
-    // Remove o loading depois da duração configurada.
-    setTimeout(() => {
-        hideLoader();
-    }, duration);
+    setTimeout(hideLoader, duration);
 }
 
 
 /**
- * Esconde o loading.
+ * Esconde o loading e remove do DOM após animação.
  */
 function hideLoader() {
     if (!loader) {
@@ -122,11 +111,7 @@ function hideLoader() {
     }
 
     loader.classList.add('is-hidden');
-
-    // Remove do DOM depois da animação.
-    setTimeout(() => {
-        loader.remove();
-    }, 800);
+    setTimeout(() => loader.remove(), 800);
 }
 
 
@@ -148,21 +133,16 @@ const getPageSource = (page) => {
 /**
  * Verifica se está em modo mobile.
  */
-const isMobile = () => {
-    return window.innerWidth <= CONFIG.mobileBreakpoint;
-};
+const isMobile = () => window.innerWidth <= CONFIG.mobileBreakpoint;
 
 
 /**
  * Retorna o modo de exibição do flipbook.
  */
 const getDisplayMode = () => {
-    // No celular em pé, uma página por vez.
-    // No celular deitado, usa o mesmo spread do tablet/desktop.
     if (isMobile() && window.innerHeight > window.innerWidth) {
         return 'single';
     }
-
     return 'double';
 };
 
@@ -172,11 +152,7 @@ const getDisplayMode = () => {
 // ============================================================
 
 function createPages() {
-    for (
-        let pageNumber = 1;
-        pageNumber <= TOTAL_PAGES;
-        pageNumber++
-    ) {
+    for (let pageNumber = 1; pageNumber <= TOTAL_PAGES; pageNumber++) {
         createCatalogPage(pageNumber);
         createThumbnail(pageNumber);
     }
@@ -184,37 +160,38 @@ function createPages() {
 
 
 /**
- * Cria uma página do catálogo.
+ * Determina o lado da página (esquerda ou direita).
  */
-function createCatalogPage(pageNumber) {
-    const page = document.createElement('div');
+function getPageSide(pageNumber) {
+    return pageNumber % 2 === 0 ? 'page-left' : 'page-right';
+}
 
-    const pageSide =
-        pageNumber % 2 === 0
-            ? 'page-left'
-            : 'page-right';
-
-    page.className = `catalog-page ${pageSide}`;
-    page.dataset.page = pageNumber;
-
-
-    const image = document.createElement('img');
-
+/**
+ * Configura os atributos de carregamento da imagem.
+ */
+function configureImageLoading(image, pageNumber) {
     image.src = getPageSource(pageNumber);
     image.alt = `Página ${pageNumber}`;
-
     image.draggable = false;
     image.decoding = 'async';
 
-
-    // Primeiras páginas carregam com prioridade.
     if (pageNumber <= 4) {
         image.fetchPriority = 'high';
     } else {
         image.loading = 'lazy';
     }
+}
 
+/**
+ * Cria uma página do catálogo.
+ */
+function createCatalogPage(pageNumber) {
+    const page = document.createElement('div');
+    page.className = `catalog-page ${getPageSide(pageNumber)}`;
+    page.dataset.page = pageNumber;
 
+    const image = document.createElement('img');
+    configureImageLoading(image, pageNumber);
     page.appendChild(image);
 
     flipbook.appendChild(page);
@@ -226,46 +203,23 @@ function createCatalogPage(pageNumber) {
  */
 function createThumbnail(pageNumber) {
     const thumbnail = document.createElement('button');
-
     thumbnail.type = 'button';
-
     thumbnail.className = 'thumb';
-
     thumbnail.dataset.page = pageNumber;
-
     thumbnail.title = `Ir para a página ${pageNumber}`;
 
-
-    // Número da página.
     const number = document.createElement('span');
-
     number.className = 'thumb-number';
-
     number.textContent = pageNumber;
 
-
-    // Imagem.
     const image = document.createElement('img');
-
     image.src = getPageSource(pageNumber);
-
     image.alt = `Miniatura da página ${pageNumber}`;
-
     image.loading = 'lazy';
-
     image.draggable = false;
 
-
-    thumbnail.append(
-        number,
-        image
-    );
-
-
-    thumbnail.addEventListener('click', () => {
-        goToPage(pageNumber);
-    });
-
+    thumbnail.append(number, image);
+    thumbnail.addEventListener('click', () => goToPage(pageNumber));
 
     thumbnails.appendChild(thumbnail);
 }
@@ -275,68 +229,57 @@ function createThumbnail(pageNumber) {
 // DIMENSIONAMENTO
 // ============================================================
 
-function getBookSize() {
-    const reader = document.querySelector('.reader');
-
+/**
+ * Calcula o espaço disponível para o livro.
+ */
+function getAvailableSpace(reader) {
     const mobile = isMobile();
-    const singlePage = getDisplayMode() === 'single';
-
-    // No celular as miniaturas ficam sobrepostas na extrema direita
-    // e não consomem espaço estrutural do leitor — tanto em pé
-    // quanto deitado.
-    const availableWidth = mobile
-        ? reader.clientWidth - 16
-        : reader.clientWidth - 90;
-
-    const availableHeight = mobile
-        ? reader.clientHeight - 16
-        : reader.clientHeight - 28;
-
-    const pageRatio =
-        CONFIG.book.pageRatio;
-
-
-    let width;
-    let height;
-
-
-    if (singlePage) {
-
-        width = Math.min(
-            availableWidth,
-            availableHeight * pageRatio
-        );
-
-        height =
-            width / pageRatio;
-
-    } else {
-
-        width = Math.min(
-            availableWidth,
-            availableHeight * pageRatio * 2
-        );
-
-        height =
-            width / (pageRatio * 2);
-    }
-
-
-    width = Math.max(
-        CONFIG.book.minWidth,
-        Math.floor(width)
-    );
-
-    height = Math.max(
-        CONFIG.book.minHeight,
-        Math.floor(height)
-    );
-
 
     return {
-        width,
-        height
+        width: mobile ? reader.clientWidth - 16 : reader.clientWidth - 90,
+        height: mobile ? reader.clientHeight - 16 : reader.clientHeight - 28
     };
+}
+
+/**
+ * Calcula as dimensões baseadas no espaço disponível e proporção.
+ */
+function calculateDimensions(availableSpace, pageRatio, singlePage) {
+    let width, height;
+
+    if (singlePage) {
+        width = Math.min(availableSpace.width, availableSpace.height * pageRatio);
+        height = width / pageRatio;
+    } else {
+        width = Math.min(availableSpace.width, availableSpace.height * pageRatio * 2);
+        height = width / (pageRatio * 2);
+    }
+
+    return { width, height };
+}
+
+/**
+ * Aplica os limites mínimos de dimensão.
+ */
+function applyMinimumDimensions(width, height) {
+    return {
+        width: Math.max(CONFIG.book.minWidth, Math.floor(width)),
+        height: Math.max(CONFIG.book.minHeight, Math.floor(height))
+    };
+}
+
+/**
+ * Calcula o tamanho do livro baseado no espaço disponível.
+ */
+function getBookSize() {
+    const reader = document.querySelector('.reader');
+    const singlePage = getDisplayMode() === 'single';
+    const pageRatio = CONFIG.book.pageRatio;
+
+    const availableSpace = getAvailableSpace(reader);
+    const dimensions = calculateDimensions(availableSpace, pageRatio, singlePage);
+
+    return applyMinimumDimensions(dimensions.width, dimensions.height);
 }
 
 
@@ -347,69 +290,38 @@ function getBookSize() {
 function initBook() {
     const size = getBookSize();
 
-
     $('#flipbook').turn({
-
         width: size.width,
-
         height: size.height,
-
         display: getDisplayMode(),
-
         pages: TOTAL_PAGES,
-
         autoCenter: true,
-
         acceleration: true,
-
         gradients: true,
-
         hover: true,
-
-        cornerSize:
-            CONFIG.book.cornerSize,
-
+        cornerSize: CONFIG.book.cornerSize,
         turnCorners: 'tl,tr,bl,br',
-
-        elevation:
-            CONFIG.book.elevation,
-
-        duration:
-            CONFIG.book.duration,
-
+        elevation: CONFIG.book.elevation,
+        duration: CONFIG.book.duration,
         direction: 'ltr',
 
-
         when: {
-
             turned(event, page) {
-
                 currentPage = page;
-
                 preloadAround(page);
-
                 updateUI(page);
             },
-
-            // O Turn.js já trata o arrasto/flip.
-            // Marcamos a interação para impedir que o click
-            // disparado pelo mouseup faça uma segunda virada.
             pressed() {
                 suppressNextClick = true;
             },
-
             released() {
                 suppressNextClick = true;
             }
         }
     });
 
-
     bookReady = true;
-
-
     preloadAround(1);
-
     updateUI(1);
 }
 
@@ -419,24 +331,12 @@ function initBook() {
 // ============================================================
 
 function preloadAround(page) {
-    const range =
-        CONFIG.preload.range;
+    const range = CONFIG.preload.range;
 
-
-    for (
-        let pageNumber = page - range;
-        pageNumber <= page + range;
-        pageNumber++
-    ) {
-
-        if (
-            pageNumber < 1 ||
-            pageNumber > TOTAL_PAGES
-        ) {
+    for (let pageNumber = page - range; pageNumber <= page + range; pageNumber++) {
+        if (pageNumber < 1 || pageNumber > TOTAL_PAGES) {
             continue;
         }
-
-
         preloadPage(pageNumber);
     }
 }
@@ -446,24 +346,15 @@ function preloadAround(page) {
  * Pré-carrega uma página específica.
  */
 function preloadPage(pageNumber) {
-
     if (preloadCache.has(pageNumber)) {
         return;
     }
 
-
     const image = new Image();
-
     image.decoding = 'async';
+    image.src = getPageSource(pageNumber);
 
-    image.src =
-        getPageSource(pageNumber);
-
-
-    preloadCache.set(
-        pageNumber,
-        image
-    );
+    preloadCache.set(pageNumber, image);
 }
 
 
@@ -471,19 +362,16 @@ function preloadPage(pageNumber) {
 // INTERFACE
 // ============================================================
 
+/**
+ * Valida e normaliza um número de página.
+ */
+function validatePageNumber(page) {
+    return Math.max(1, Math.min(TOTAL_PAGES, Number(page) || 1));
+}
+
 function updateUI(page) {
-
-    currentPage = Math.max(
-        1,
-        Math.min(
-            TOTAL_PAGES,
-            Number(page) || 1
-        )
-    );
-
-
+    currentPage = validatePageNumber(page);
     updateActiveThumbnail();
-
     scrollToActiveThumbnail();
 }
 
@@ -492,24 +380,12 @@ function updateUI(page) {
  * Atualiza a miniatura ativa.
  */
 function updateActiveThumbnail() {
+    const allThumbnails = thumbnails.querySelectorAll('.thumb');
 
-    const allThumbnails =
-        thumbnails.querySelectorAll('.thumb');
-
-
-    allThumbnails.forEach(
-        (thumbnail, index) => {
-
-            const isActive =
-                index + 1 === currentPage;
-
-
-            thumbnail.classList.toggle(
-                'active',
-                isActive
-            );
-        }
-    );
+    allThumbnails.forEach((thumbnail, index) => {
+        const isActive = index + 1 === currentPage;
+        thumbnail.classList.toggle('active', isActive);
+    });
 }
 
 
@@ -517,40 +393,20 @@ function updateActiveThumbnail() {
  * Mantém a miniatura ativa visível.
  */
 function scrollToActiveThumbnail() {
-
-    const activeThumbnail =
-        thumbnails.querySelector(
-            '.thumb.active'
-        );
-
+    const activeThumbnail = thumbnails.querySelector('.thumb.active');
 
     if (!activeThumbnail) {
         return;
     }
 
+    const listRect = thumbnails.getBoundingClientRect();
+    const itemRect = activeThumbnail.getBoundingClientRect();
 
-    const listRect =
-        thumbnails.getBoundingClientRect();
-
-    const itemRect =
-        activeThumbnail.getBoundingClientRect();
-
-
-    const isAbove =
-        itemRect.top <
-        listRect.top + 48;
-
-    const isBelow =
-        itemRect.bottom >
-        listRect.bottom - 12;
-
+    const isAbove = itemRect.top < listRect.top + 48;
+    const isBelow = itemRect.bottom > listRect.bottom - 12;
 
     if (isAbove || isBelow) {
-
-        activeThumbnail.scrollIntoView({
-            behavior: 'auto',
-            block: 'nearest'
-        });
+        activeThumbnail.scrollIntoView({ behavior: 'auto', block: 'nearest' });
     }
 }
 
@@ -560,26 +416,11 @@ function scrollToActiveThumbnail() {
 // ============================================================
 
 function goToPage(page) {
-
-    const targetPage =
-        Math.max(
-            1,
-            Math.min(
-                TOTAL_PAGES,
-                Number(page) || 1
-            )
-        );
-
+    const targetPage = validatePageNumber(page);
 
     if (bookReady) {
-
-        $('#flipbook').turn(
-            'page',
-            targetPage
-        );
-
+        $('#flipbook').turn('page', targetPage);
     } else {
-
         updateUI(targetPage);
     }
 }
@@ -589,26 +430,19 @@ function goToPage(page) {
  * Próxima página.
  */
 function nextPage() {
-
     if (!bookReady) {
         return;
     }
-
-
     $('#flipbook').turn('next');
 }
-
 
 /**
  * Página anterior.
  */
 function previousPage() {
-
     if (!bookReady) {
         return;
     }
-
-
     $('#flipbook').turn('previous');
 }
 
@@ -618,6 +452,84 @@ function previousPage() {
 // ============================================================
 
 /**
+ * Verifica se o clique deve ser ignorado (devido a interações recentes ou elementos específicos).
+ */
+function shouldIgnoreClick(event) {
+    if (!bookReady) {
+        return true;
+    }
+
+    if (suppressNextClick) {
+        suppressNextClick = false;
+        return true;
+    }
+
+    if (
+        event.target.closest('.download') ||
+        event.target.closest('.thumb')
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Verifica se o clique está nos cantos inferiores do livro (áreas controladas pelo Turn.js).
+ */
+function isInBottomCorner(event, flipbookElement) {
+    const bookRect = flipbookElement.getBoundingClientRect();
+    const localX = event.clientX - bookRect.left;
+    const localY = event.clientY - bookRect.top;
+    const corner = CONFIG.book.cornerSize;
+
+    const inBottomLeftCorner =
+        localX <= corner &&
+        localY >= bookRect.height - corner;
+
+    const inBottomRightCorner =
+        localX >= bookRect.width - corner &&
+        localY >= bookRect.height - corner;
+
+    return inBottomLeftCorner || inBottomRightCorner;
+}
+
+/**
+ * Determina se o clique foi no lado esquerdo do elemento.
+ */
+function isClickOnLeftSide(event, element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + (rect.width / 2);
+    return event.clientX < centerX;
+}
+
+/**
+ * Determina o lado do clique e executa a navegação apropriada.
+ */
+function handleNavigationClick(event) {
+    const flipbookElement = document.getElementById('flipbook');
+    const clickedInsideBook = flipbookElement && event.target.closest('#flipbook');
+
+    let leftSide;
+
+    if (clickedInsideBook) {
+        if (isInBottomCorner(event, flipbookElement)) {
+            return;
+        }
+        leftSide = isClickOnLeftSide(event, flipbookElement);
+    } else {
+        const reader = document.querySelector('.reader');
+        leftSide = isClickOnLeftSide(event, reader);
+    }
+
+    if (leftSide) {
+        previousPage();
+    } else {
+        nextPage();
+    }
+}
+
+/**
  * Permite avançar/voltar clicando em praticamente qualquer área
  * livre do leitor, inclusive em cima das páginas do catálogo.
  *
@@ -625,103 +537,17 @@ function previousPage() {
  * preservando o efeito de "orelha" já existente.
  */
 function initNavigationClickAreas() {
-
     const reader = document.querySelector('.reader');
 
     if (!reader) {
         return;
     }
 
-
     reader.addEventListener('click', (event) => {
-
-        if (!bookReady) {
+        if (shouldIgnoreClick(event)) {
             return;
         }
-
-        // Se o clique veio logo depois de uma interação do Turn.js
-        // (pressionar/arrastar/soltar), deixa o próprio flipbook
-        // concluir a animação e não executa uma segunda navegação.
-        if (suppressNextClick) {
-            suppressNextClick = false;
-            return;
-        }
-
-
-        // Não interfere no botão de download nem nas miniaturas.
-        if (
-            event.target.closest('.download') ||
-            event.target.closest('.thumb')
-        ) {
-            return;
-        }
-
-
-        const flipbookElement =
-            document.getElementById('flipbook');
-
-        const clickedInsideBook =
-            flipbookElement &&
-            event.target.closest('#flipbook');
-
-
-        let leftSide;
-
-
-        if (clickedInsideBook) {
-
-            // Quando o clique ocorre dentro do catálogo,
-            // divide exatamente o livro ao meio.
-            const bookRect =
-                flipbookElement.getBoundingClientRect();
-
-            const centerX =
-                bookRect.left + (bookRect.width / 2);
-
-            leftSide = event.clientX < centerX;
-
-
-            // O Turn.js já trata os cantos inferiores.
-            // Evita que um clique na "orelha" gere duas viradas.
-            const localX =
-                event.clientX - bookRect.left;
-
-            const localY =
-                event.clientY - bookRect.top;
-
-            const corner = CONFIG.book.cornerSize;
-
-            const inBottomLeftCorner =
-                localX <= corner &&
-                localY >= bookRect.height - corner;
-
-            const inBottomRightCorner =
-                localX >= bookRect.width - corner &&
-                localY >= bookRect.height - corner;
-
-            if (inBottomLeftCorner || inBottomRightCorner) {
-                return;
-            }
-
-        } else {
-
-            // Fora do livro, toda a área do leitor funciona como
-            // uma grande área de navegação dividida ao meio.
-            const readerRect =
-                reader.getBoundingClientRect();
-
-            const centerX =
-                readerRect.left + (readerRect.width / 2);
-
-            leftSide = event.clientX < centerX;
-        }
-
-
-        if (leftSide) {
-            previousPage();
-        } else {
-            nextPage();
-        }
+        handleNavigationClick(event);
     });
 }
 
@@ -733,46 +559,25 @@ function initNavigationClickAreas() {
 const reader = document.querySelector('.reader');
 
 function setZoomStateClasses() {
-
     if (!reader) {
         return;
     }
 
-    // As miniaturas só ficam disponíveis quando o catálogo voltou
-    // ao tamanho normal (zoom 1x).
-    reader.classList.toggle(
-        'is-zoomed',
-        zoomLevel > 1.001
-    );
-
-    reader.classList.toggle(
-        'is-zooming',
-        pinchActive
-    );
+    reader.classList.toggle('is-zoomed', zoomLevel > 1.001);
+    reader.classList.toggle('is-zooming', pinchActive);
 }
 
 
 function applyZoom(translateX = 0, translateY = 0) {
-
-    flipbook.style.transform =
-        `translate3d(${translateX}px, ${translateY}px, 0) scale(${zoomLevel})`;
-
+    flipbook.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${zoomLevel})`;
     setZoomStateClasses();
 }
 
 
 function changeZoom(delta) {
-
     zoomLevel = Math.max(
         CONFIG.zoom.min,
-
-        Math.min(
-            CONFIG.zoom.max,
-
-            +(
-                zoomLevel + delta
-            ).toFixed(2)
-        )
+        Math.min(CONFIG.zoom.max, +(zoomLevel + delta).toFixed(2))
     );
 
     if (zoomLevel <= 1) {
@@ -802,12 +607,9 @@ function getTouchCenter(touchA, touchB) {
 
 
 function resetPinchZoom() {
-
     pinchActive = false;
     pinchStartDistance = 0;
 
-    // Volta exatamente para 1x quando a pinça termina próxima
-    // do tamanho original.
     if (zoomLevel <= 1.04) {
         zoomLevel = 1;
     }
@@ -817,8 +619,95 @@ function resetPinchZoom() {
 }
 
 
-function initPinchZoom() {
+/**
+ * Inicia o estado de zoom por pinça.
+ */
+function startPinchZoom(event) {
+    const touchA = event.touches[0];
+    const touchB = event.touches[1];
 
+    pinchActive = true;
+    pinchStartDistance = getTouchDistance(touchA, touchB);
+    pinchStartZoom = zoomLevel;
+
+    const center = getTouchCenter(touchA, touchB);
+    pinchStartCenterX = center.x;
+    pinchStartCenterY = center.y;
+
+    const transform = getComputedStyle(flipbook).transform;
+    if (transform && transform !== 'none') {
+        const matrix = new DOMMatrixReadOnly(transform);
+        pinchStartTranslateX = matrix.m41;
+        pinchStartTranslateY = matrix.m42;
+    } else {
+        pinchStartTranslateX = 0;
+        pinchStartTranslateY = 0;
+    }
+
+    flipbook.style.transition = 'none';
+    suppressNextClick = true;
+    setZoomStateClasses();
+}
+
+/**
+ * Calcula a nova posição de zoom durante o movimento de pinça.
+ */
+function calculatePinchZoomPosition(event) {
+    const touchA = event.touches[0];
+    const touchB = event.touches[1];
+    const currentDistance = getTouchDistance(touchA, touchB);
+
+    if (!pinchStartDistance) {
+        return null;
+    }
+
+    const rawZoom = pinchStartZoom * (currentDistance / pinchStartDistance);
+    zoomLevel = Math.max(1, Math.min(CONFIG.zoom.max, rawZoom));
+
+    const center = getTouchCenter(touchA, touchB);
+    const rect = flipbook.getBoundingClientRect();
+
+    const localX = pinchStartCenterX - (rect.left + rect.width / 2);
+    const localY = pinchStartCenterY - (rect.top + rect.height / 2);
+    const scaleDelta = zoomLevel - pinchStartZoom;
+
+    const translateX =
+        pinchStartTranslateX +
+        (center.x - pinchStartCenterX) -
+        (scaleDelta * localX / pinchStartZoom);
+
+    const translateY =
+        pinchStartTranslateY +
+        (center.y - pinchStartCenterY) -
+        (scaleDelta * localY / pinchStartZoom);
+
+    return { translateX, translateY };
+}
+
+/**
+ * Manipula o movimento de pinça para zoom.
+ */
+function handlePinchMove(event) {
+    const position = calculatePinchZoomPosition(event);
+    if (position) {
+        applyZoom(position.translateX, position.translateY);
+    }
+}
+
+/**
+ * Finaliza o zoom por pinça.
+ */
+function finishPinch() {
+    if (!pinchActive) {
+        return;
+    }
+    resetPinchZoom();
+}
+
+/**
+ * Configura os eventos de toque para zoom por pinça.
+ */
+function initPinchZoom() {
     if (!reader || !flipbook) {
         return;
     }
@@ -826,115 +715,26 @@ function initPinchZoom() {
     reader.addEventListener(
         'touchstart',
         (event) => {
-
             if (!isMobile() || event.touches.length !== 2) {
                 return;
             }
-
-            const touchA = event.touches[0];
-            const touchB = event.touches[1];
-
-            pinchActive = true;
-            pinchStartDistance = getTouchDistance(touchA, touchB);
-            pinchStartZoom = zoomLevel;
-
-            const center = getTouchCenter(touchA, touchB);
-            pinchStartCenterX = center.x;
-            pinchStartCenterY = center.y;
-
-            const transform = getComputedStyle(flipbook).transform;
-            if (transform && transform !== 'none') {
-                const matrix = new DOMMatrixReadOnly(transform);
-                pinchStartTranslateX = matrix.m41;
-                pinchStartTranslateY = matrix.m42;
-            } else {
-                pinchStartTranslateX = 0;
-                pinchStartTranslateY = 0;
-            }
-
-            flipbook.style.transition = 'none';
-            suppressNextClick = true;
-            setZoomStateClasses();
-
+            startPinchZoom(event);
             event.preventDefault();
         },
         { passive: false }
     );
-
 
     reader.addEventListener(
         'touchmove',
         (event) => {
-
             if (!pinchActive || event.touches.length !== 2) {
                 return;
             }
-
-            const touchA = event.touches[0];
-            const touchB = event.touches[1];
-
-            const currentDistance =
-                getTouchDistance(touchA, touchB);
-
-            if (!pinchStartDistance) {
-                return;
-            }
-
-            const rawZoom =
-                pinchStartZoom *
-                (currentDistance / pinchStartDistance);
-
-            zoomLevel = Math.max(
-                1,
-                Math.min(
-                    CONFIG.zoom.max,
-                    rawZoom
-                )
-            );
-
-            const center = getTouchCenter(touchA, touchB);
-            const rect = flipbook.getBoundingClientRect();
-
-            // Mantém o ponto da pinça aproximadamente no mesmo lugar
-            // enquanto o catálogo aumenta/diminui.
-            const localX =
-                pinchStartCenterX -
-                (rect.left + rect.width / 2);
-
-            const localY =
-                pinchStartCenterY -
-                (rect.top + rect.height / 2);
-
-            const scaleDelta =
-                zoomLevel - pinchStartZoom;
-
-            const translateX =
-                pinchStartTranslateX +
-                (center.x - pinchStartCenterX) -
-                (scaleDelta * localX / pinchStartZoom);
-
-            const translateY =
-                pinchStartTranslateY +
-                (center.y - pinchStartCenterY) -
-                (scaleDelta * localY / pinchStartZoom);
-
-            applyZoom(translateX, translateY);
-
+            handlePinchMove(event);
             event.preventDefault();
         },
         { passive: false }
     );
-
-
-    const finishPinch = () => {
-
-        if (!pinchActive) {
-            return;
-        }
-
-        resetPinchZoom();
-    };
-
 
     reader.addEventListener('touchend', finishPinch, { passive: false });
     reader.addEventListener('touchcancel', finishPinch, { passive: false });
@@ -945,83 +745,78 @@ function initPinchZoom() {
 // TECLADO
 // ============================================================
 
-document.addEventListener(
-    'keydown',
-    (event) => {
-
-        switch (event.key) {
-
-            case 'ArrowRight':
-                nextPage();
-                break;
-
-            case 'ArrowLeft':
-                previousPage();
-                break;
-
-            case 'Home':
-                goToPage(1);
-                break;
-
-            case 'End':
-                goToPage(TOTAL_PAGES);
-                break;
-        }
+function handleKeyboardNavigation(event) {
+    switch (event.key) {
+        case 'ArrowRight':
+            nextPage();
+            break;
+        case 'ArrowLeft':
+            previousPage();
+            break;
+        case 'Home':
+            goToPage(1);
+            break;
+        case 'End':
+            goToPage(TOTAL_PAGES);
+            break;
     }
-);
+}
+
+document.addEventListener('keydown', handleKeyboardNavigation);
 
 
 // ============================================================
 // RESPONSIVIDADE
 // ============================================================
 
-window.addEventListener(
-    'resize',
-    () => {
-
-        clearTimeout(resizeTimer);
-
-
-        resizeTimer = setTimeout(
-            () => {
-
-                if (!bookReady) {
-                    return;
-                }
-
-
-                const size =
-                    getBookSize();
-
-                const displayMode =
-                    getDisplayMode();
-
-
-                try {
-
-                    $('#flipbook').turn(
-                        'size',
-                        size.width,
-                        size.height
-                    );
-
-
-                    $('#flipbook').turn(
-                        'display',
-                        displayMode
-                    );
-
-                } catch (error) {
-
-                    // Evita quebrar o catálogo
-                    // durante uma animação.
-                }
-
-            },
-            120
-        );
+/**
+ * Executa uma operação do Turn.js com tratamento de erro.
+ */
+function safeTurnOperation(operation, ...args) {
+    try {
+        $('#flipbook').turn(operation, ...args);
+    } catch (error) {
+        // Evita quebrar o catálogo durante uma animação.
     }
-);
+}
+
+/**
+ * Atualiza o tamanho do livro.
+ */
+function updateBookSize() {
+    const size = getBookSize();
+    safeTurnOperation('size', size.width, size.height);
+}
+
+/**
+ * Atualiza o modo de exibição do livro.
+ */
+function updateBookDisplayMode() {
+    const displayMode = getDisplayMode();
+    safeTurnOperation('display', displayMode);
+}
+
+/**
+ * Manipula o redimensionamento da janela.
+ */
+function handleResize() {
+    if (!bookReady) {
+        return;
+    }
+
+    updateBookSize();
+    updateBookDisplayMode();
+}
+
+/**
+ * Configura o listener de redimensionamento com debounce.
+ */
+function initResizeHandler() {
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(handleResize, 120);
+    });
+}
 
 
 // ============================================================
@@ -1029,18 +824,13 @@ window.addEventListener(
 // ============================================================
 
 function initializeCatalog() {
-
     createPages();
-
     applyZoom();
-
     initBook();
-
     initNavigationClickAreas();
-
     initPinchZoom();
-
     initLoader();
+    initResizeHandler();
 }
 
 
