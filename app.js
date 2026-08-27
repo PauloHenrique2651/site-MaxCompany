@@ -196,26 +196,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function scrollToCatalog(behavior = 'smooth') {
+    const target = document.getElementById('catalogo');
+    if (!target) return false;
+    setCatalogHighlight(true);
+    target.scrollIntoView({ behavior, block: 'start' });
+    return true;
+  }
+
   catalogLinks.forEach(link => {
     link.addEventListener('click', event => {
       const target = document.getElementById('catalogo');
       if (target) {
         event.preventDefault();
-        setCatalogHighlight(true);
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollToCatalog('smooth');
         history.replaceState(null, '', '#catalogo');
       }
     });
   });
 
+  /* Deep-link support: every page already contains the integrated catalog. */
+  if (window.location.hash === '#catalogo' && catalogSection) {
+    window.setTimeout(() => scrollToCatalog('auto'), 80);
+  }
+
   /* When the catalog is visible, keep its navigation item highlighted in white.
      The current page/section highlight remains untouched, creating the requested
      double indication: current section + catalog.
 
-     IMPORTANT: the catalog iframe is intentionally NOT started on page load.
-     Its src is assigned only when the catalog section actually enters the
-     viewport, so the original catalog loader is shown only when the user
-     reaches the catalog. */
+     The embedded flipbook is lazy-started only when the catalog section enters
+     the viewport, preserving the premium loader without loading it on page load. */
   const catalogFrame = catalogSection ? catalogSection.querySelector(".catalog-frame[data-catalog-src]") : null;
   let catalogStarted = false;
 
@@ -259,7 +269,9 @@ document.addEventListener("DOMContentLoaded", () => {
       saveHeroVideoTime();
 
       const href = link.getAttribute("href") || "";
+      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
       const isInternalPage =
+        !isTouchDevice &&
         !event.defaultPrevented &&
         !event.metaKey &&
         !event.ctrlKey &&
@@ -301,6 +313,50 @@ document.addEventListener("DOMContentLoaded", () => {
     hero.addEventListener("mouseleave", () => {
       if (activeVideo) activeVideo.style.transform = "";
     });
+  }
+
+  /* Group specialty cards: only the clicked card stays open. */
+  const specialtyCards = Array.from(document.querySelectorAll(".group-specialty"));
+  specialtyCards.forEach(card => {
+    const summary = card.querySelector("summary");
+    if (!summary) return;
+    summary.addEventListener("click", () => {
+      specialtyCards.forEach(other => {
+        if (other !== card) other.removeAttribute("open");
+      });
+    });
+  });
+
+  /* Footer brand deep-links: return to O Grupo with the exact specialty open. */
+  const specialtyParam = new URLSearchParams(window.location.search).get("marca");
+  if (specialtyParam && specialtyCards.length) {
+    const targetCard = document.querySelector(`.group-specialty[data-marca="${CSS.escape(specialtyParam)}"]`);
+    if (targetCard) {
+      specialtyCards.forEach(card => card.removeAttribute("open"));
+      targetCard.setAttribute("open", "");
+      window.setTimeout(() => {
+        const header = document.getElementById("site-header");
+        const offset = (header ? header.getBoundingClientRect().height : 0) + 24;
+        const rect = targetCard.getBoundingClientRect();
+        const top = rect.top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        targetCard.classList.add("is-targeted");
+        window.setTimeout(() => targetCard.classList.remove("is-targeted"), 1800);
+      }, 100);
+    }
+  }
+
+  /* Client logo deep-links: open the matching client case and focus it. */
+  const clientParam = new URLSearchParams(window.location.search).get("cliente");
+  if (clientParam) {
+    const clientCard = document.querySelector(`[data-client="${CSS.escape(clientParam)}"]`);
+    if (clientCard) {
+      window.setTimeout(() => {
+        clientCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        clientCard.classList.add("is-targeted");
+        window.setTimeout(() => clientCard.classList.remove("is-targeted"), 1800);
+      }, 450);
+    }
   }
 
   /* Contact form: original mailto behavior preserved. */

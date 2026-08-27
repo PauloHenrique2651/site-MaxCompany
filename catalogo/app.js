@@ -237,7 +237,7 @@ function getAvailableSpace(reader) {
 
     return {
         width: mobile ? reader.clientWidth - 16 : reader.clientWidth - 90,
-        height: mobile ? reader.clientHeight - 16 : reader.clientHeight - 28
+        height: mobile ? reader.clientHeight - 82 : reader.clientHeight - 28
     };
 }
 

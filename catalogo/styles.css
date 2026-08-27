@@ -139,13 +139,13 @@ body {
   -webkit-user-drag: none;
 }
 /* ============================================================
-   BOTÃO DE DOWNLOAD
+   BOTÃO DO CATÁLOGO COMPLETO
    ============================================================ */ .download {
   position: absolute;
   z-index: 50;
   top: 12px;
   right: 12px;
-  padding: 7px 11px;
+  padding: 9px 13px;
   border: 1px solid rgba(0, 0, 0, 0.22);
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.94);
@@ -153,6 +153,7 @@ body {
   text-decoration: none;
   font-size: 12px;
   line-height: 1;
+  white-space: nowrap;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
   transition: background 0.15s ease, box-shadow 0.15s ease;
 }
@@ -527,4 +528,65 @@ body {
 }
 /* Elementos que possuem ação própria continuam com seus cursores. */ .download, .thumb {
   cursor: pointer;
+}
+
+
+/* ============================================================
+   MOBILE FINAL — LEITOR + MINIATURAS
+   ============================================================ */
+@media (max-width: 760px) {
+  .reader {
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+  }
+  .book-wrap {
+    width: 100%;
+    height: 100%;
+    padding: 8px 8px 74px;
+  }
+  .thumbnails {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 0;
+    height: 66px;
+    background: rgba(119,119,119,.97);
+    border-top: 1px solid rgba(255,255,255,.18);
+  }
+  .thumb-list {
+    width: 100%;
+    height: 66px;
+    min-height: 66px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 5px 8px 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .thumb {
+    width: 42px;
+    height: 56px;
+    min-width: 42px;
+    min-height: 56px;
+    flex: 0 0 42px;
+  }
+  .thumb-number {
+    min-width: 14px;
+    height: 14px;
+    top: 2px;
+    left: 2px;
+    padding: 2px 3px;
+    font-size: 7px;
+  }
+  .reader.is-zoomed .thumbnails,
+  .reader.is-zooming .thumbnails {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
