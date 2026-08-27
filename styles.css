@@ -1,3 +1,13 @@
+/*
+ * MAXCOMPANY — CSS ORGANIZADO
+ *
+ * Versão limpa do CSS atual.
+ * - Remove comentários de histórico/AJUSTES.
+ * - Consolida regras exatamente duplicadas dentro do mesmo contexto.
+ * - Preserva os seletores, valores e breakpoints do CSS atual.
+ * - Não altera HTML ou JavaScript.
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 :root {
   --navy: #07111c;
@@ -12,7 +22,13 @@
   --blue: #2878c8;
   --blue-bright: #48a2ff;
   --amber: #f4a63a;
-  --shell: 1360px;
+  --shell: 1400px;
+  --font-family: 'Montserrat', Arial, sans-serif;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
 }
 * {
   box-sizing: border-box;
@@ -25,16 +41,12 @@ body {
   background: var(--white);
   color: var(--ink);
   font-family: 'Montserrat', Arial, sans-serif;
-}
-body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 h1, h2, h3 {
   text-wrap: balance;
 }
-
 body.menu-open {
   overflow: hidden;
 }
@@ -55,18 +67,7 @@ img {
   width: min(var(--shell), calc(100% - 96px));
   margin-inline: auto;
 }
-/* ---------- Type system ---------- */
-/* Montserrat is the single visual language of the site. Existing sizes are
-   intentionally preserved so typography changes do not disturb layout. */
-:root {
-  --font-family: 'Montserrat', Arial, sans-serif;
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  --font-extrabold: 800;
-}
- .eyebrow {
+.eyebrow {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -78,9 +79,9 @@ img {
 }
 .eyebrow > span {
   display: inline-block;
-  width: 28px;
-  height: 2px;
-  background: var(--blue);
+  width: auto;
+  height: auto;
+  background: none;
 }
 .eyebrow-light {
   color: #c7d1da;
@@ -144,7 +145,7 @@ h1, h2, h3, p {
 .button-dark:hover {
   background: var(--blue);
 }
-/* ---------- Header ---------- */ .site-header {
+.site-header {
   position: absolute;
   inset: 0 0 auto;
   z-index: 100;
@@ -189,13 +190,14 @@ h1, h2, h3, p {
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 31px;
+  gap: 25px;
   margin-left: auto;
 }
 .desktop-nav a {
   color: #d6dee5;
   font-size: 11px;
   transition: color .2s ease;
+  white-space: nowrap;
 }
 .desktop-nav a:hover {
   color: #fff;
@@ -213,8 +215,7 @@ h1, h2, h3, p {
   height: 2px;
   background: var(--amber);
 }
-/* Catalog highlight is intentionally independent from the current page highlight.
-   When the catalog is on screen, both indicators remain visible. */ .desktop-nav a.is-catalog-current {
+.desktop-nav a.is-catalog-current {
   color: #fff;
   position: relative;
 }
@@ -281,23 +282,28 @@ h1, h2, h3, p {
 .mobile-panel {
   display: none;
 }
-/* ---------- Home hero ---------- */ .home-hero {
-  min-height: 780px;
-  height: min(100svh, 980px);
+.home-hero {
+  min-height: 720px;
+  height: 56.25vw;
   position: relative;
   overflow: hidden;
-  background: #071019;
+  background: #05090d;
   color: #fff;
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 16 / 9;
 }
 .hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0;
   transition: opacity 1s ease;
   filter: saturate(.82) contrast(1.08);
+  object-position: center center;
+  background: #05090d;
 }
 .hero-video.is-active {
   opacity: 1;
@@ -320,19 +326,22 @@ h1, h2, h3, p {
   position: relative;
   z-index: 2;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   padding-bottom: 128px;
+  justify-content: flex-start;
+  padding: 110px 0 70px;
 }
 .hero-copy {
-  max-width: 790px;
+  max-width: 560px;
+  width: min(560px, 42vw);
 }
 .hero-copy h1 {
-  max-width: 760px;
-  margin: 20px 0 24px;
+  max-width: 530px;
+  margin: 15px 0 17px;
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: clamp(58px, 6.0vw, 88px);
-  line-height: 1.02;
-  letter-spacing: -.035em;
+  font-size: clamp(44px, 3.35vw, 58px);
+  line-height: .98;
+  letter-spacing: -.04em;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -341,22 +350,23 @@ h1, h2, h3, p {
   font-style: normal;
 }
 .hero-copy p {
-  max-width: 600px;
-  margin-bottom: 28px;
+  max-width: 510px;
+  margin-bottom: 22px;
   color: #d2dbe2;
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.65;
 }
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 27px;
+  gap: 22px;
+  margin-top: 18px;
 }
 .hero-meta {
   position: absolute;
   z-index: 4;
   left: 50%;
-  bottom: 29px;
+  bottom: 30px;
   transform: translateX(-50%);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -393,7 +403,7 @@ h1, h2, h3, p {
   font-size: 9px;
   letter-spacing: .17em;
 }
-/* ---------- Stats + brand strip ---------- */ .stats-section {
+.stats-section {
   background: #0b1117;
   color: #fff;
   border-top: 1px solid rgba(255,255,255,.08);
@@ -463,7 +473,7 @@ h1, h2, h3, p {
   border-bottom: 1px solid #111;
   padding-bottom: 6px;
 }
-/* ---------- Editorial ---------- */ .editorial-section {
+.editorial-section {
   padding: 135px 0;
 }
 .editorial-grid {
@@ -499,7 +509,7 @@ h1, h2, h3, p {
 .editorial-copy .text-link {
   margin-top: 12px;
 }
-/* ---------- Dark / numbered content ---------- */ .dark-section {
+.dark-section {
   padding: 130px 0;
   background: var(--navy);
   color: #fff;
@@ -617,7 +627,7 @@ h1, h2, h3, p {
   font-size: 19px;
   opacity: .7;
 }
-/* ---------- Industries ---------- */ .industries-section {
+.industries-section {
   padding: 135px 0;
   background: #f4f6f7;
 }
@@ -630,7 +640,7 @@ h1, h2, h3, p {
 .industries-section .numbered-card:hover {
   background: #f9fbfc;
 }
-/* ---------- Statement ---------- */ .statement-section {
+.statement-section {
   padding: 145px 0;
   background: #eef2f5;
 }
@@ -664,7 +674,7 @@ h1, h2, h3, p {
 .statement-blue .statement-grid > p {
   color: #a9b8c5;
 }
-/* ---------- Page hero ---------- */ .page-hero-v2 {
+.page-hero-v2 {
   min-height: 610px;
   position: relative;
   display: flex;
@@ -716,7 +726,7 @@ h1, h2, h3, p {
   color: rgba(255,255,255,.025);
   letter-spacing: -.08em;
 }
-/* ---------- Shared section hero: compact, cinematic, but part of normal page flow ---------- */ .shared-section-hero::after {
+.shared-section-hero::after {
   display: none;
 }
 .shared-section-hero {
@@ -752,7 +762,9 @@ h1, h2, h3, p {
 .shared-section-hero .page-hero-inner {
   width: min(var(--shell), calc(100% - 96px));
   margin-inline: auto;
-  padding-top: 118px;
+  padding-top: 0;
+  position: relative;
+  z-index: 3;
 }
 .shared-section-hero h1 {
   max-width: 780px;
@@ -780,7 +792,7 @@ h1, h2, h3, p {
 .section-hero-current span:first-child {
   color: var(--amber);
 }
-/* ---------- Product list ---------- */ .list-section {
+.list-section {
   padding: 110px 0 135px;
 }
 .list-intro {
@@ -826,7 +838,7 @@ h1, h2, h3, p {
   font-size: 14px;
   margin-bottom: 28px;
 }
-/* ---------- Contact ---------- */ .contact-section {
+.contact-section {
   padding: 130px 0 145px;
 }
 .contact-grid {
@@ -904,7 +916,7 @@ h1, h2, h3, p {
   margin-top: 24px;
   border: 0;
 }
-/* ---------- Final CTA ---------- */ .final-cta {
+.final-cta {
   padding: 125px 0;
   background: var(--navy);
   color: #fff;
@@ -930,7 +942,7 @@ h1, h2, h3, p {
 .final-cta-light h2 em {
   color: #738492;
 }
-/* ---------- Footer ---------- */ .site-footer {
+.site-footer {
   position: relative;
   overflow: hidden;
   padding: 75px 0 25px;
@@ -949,15 +961,15 @@ h1, h2, h3, p {
 .footer-main {
   position: relative;
   display: grid;
-  grid-template-columns: 1.45fr 1fr 1.15fr 1fr;
+  grid-template-columns: 1.35fr 1fr 1.15fr 1fr;
   gap: 55px;
 }
 .footer-brand img {
   width: 180px;
 }
 .footer-brand p {
-  max-width: 300px;
-  margin-top: 22px;
+  max-width: 330px;
+  margin-top: 0;
   color: #77828c;
   font-size: 12px;
   line-height: 1.7;
@@ -1003,7 +1015,7 @@ h1, h2, h3, p {
   color: #56616b;
   font-size: 9px;
 }
-/* ---------- Responsive ---------- */ @media (max-width: 1000px) {
+@media (max-width: 1000px) {
   .shell {
     width: min(var(--shell), calc(100% - 56px));
   }
@@ -1138,12 +1150,10 @@ h1, h2, h3, p {
   }
   .hero-meta {
     bottom: 23px;
+    grid-template-columns: 1fr auto;
   }
   .hero-scroll {
     display: none;
-  }
-  .hero-meta {
-    grid-template-columns: 1fr auto;
   }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1263,9 +1273,7 @@ h1, h2, h3, p {
     gap: 8px;
   }
 }
-/* ============================================================
-   CATÁLOGO INTEGRADO
-   ============================================================ */ .catalog-section {
+.catalog-section {
   position: relative;
   min-height: 100vh;
   background: #05080c;
@@ -1326,11 +1334,7 @@ h1, h2, h3, p {
     min-height: 560px;
   }
 }
-/* ============================================================
-   HOME LOADER — CINEMATIC / EDITORIAL
-   Reinterpreta o loading original do catálogo sem repetir
-   sua composição central.
-   ============================================================ */ html.home-loading, body.home-loading {
+html.home-loading, body.home-loading {
   overflow: hidden;
 }
 .home-loader {
@@ -1604,24 +1608,13 @@ h1, h2, h3, p {
     animation: none !important;
   }
 }
-
-/* ============================================================
-   HERO INTERNO — TÍTULOS COMPACTOS
-   ============================================================ */
-.shared-section-hero .page-hero-inner {
-  position: relative;
-  z-index: 3;
-  width: min(var(--shell), calc(100% - 96px));
-  margin-inline: auto;
-  padding-top: 0;
-}
 .shared-section-hero .hero-title-compact {
-  max-width: 760px;
-  margin: 18px 0 20px;
+  max-width: 650px;
+  margin: 16px 0 18px;
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: clamp(46px, 4.35vw, 68px);
+  font-size: clamp(44px, 3.45vw, 56px);
   line-height: .98;
-  letter-spacing: -.035em;
+  letter-spacing: -.04em;
   font-weight: 700;
   text-transform: uppercase;
   text-wrap: balance;
@@ -1633,62 +1626,82 @@ h1, h2, h3, p {
   font-style: normal;
 }
 .shared-section-hero .page-hero-inner > p {
-  max-width: 620px;
+  max-width: 570px;
   margin: 0;
   color: #bdc9d3;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.65;
 }
-.shared-section-hero .section-hero-current { margin-top: 30px; }
+.shared-section-hero .section-hero-current {
+  margin-top: 30px;
+}
 .shared-section-hero .page-hero-mark {
-  right: -3%; bottom: -18%; z-index: 0; font-size: 32vw; line-height: .8;
-  opacity: .55; pointer-events: none;
+  right: -3%;
+  bottom: -18%;
+  z-index: 0;
+  font-size: 32vw;
+  line-height: .8;
+  opacity: .55;
+  pointer-events: none;
 }
 @media (min-width: 1400px) {
-  .shared-section-hero .hero-title-compact { max-width: 820px; font-size: 68px; }
+  .shared-section-hero .hero-title-compact {
+    max-width: 820px;
+    font-size: 68px;
+  }
 }
 @media (max-width: 1100px) {
-  .shared-section-hero .page-hero-inner { width: min(var(--shell), calc(100% - 64px)); }
-  .shared-section-hero .hero-title-compact { max-width: 700px; font-size: clamp(44px, 5vw, 62px); }
+  .shared-section-hero .page-hero-inner {
+    width: min(var(--shell), calc(100% - 64px));
+  }
+  .shared-section-hero .hero-title-compact {
+    max-width: 700px;
+    font-size: clamp(44px, 5vw, 62px);
+  }
 }
 @media (max-width: 700px) {
-  .shared-section-hero { min-height: 470px; height: 470px; padding-bottom: 48px; }
-  .shared-section-hero .page-hero-inner { width: calc(100% - 36px); padding-top: 0; }
-  .shared-section-hero .hero-title-compact { max-width: 100%; margin: 16px 0 18px; font-size: clamp(40px, 10.5vw, 58px); line-height: .98; }
-  .shared-section-hero .page-hero-inner > p { max-width: 100%; font-size: 13px; line-height: 1.6; }
-  .shared-section-hero .section-hero-current { margin-top: 26px; }
-  .shared-section-hero .page-hero-mark { font-size: 48vw; right: -8%; bottom: -10%; }
+  .shared-section-hero {
+    min-height: 470px;
+    height: 470px;
+    padding-bottom: 48px;
+  }
+  .shared-section-hero .page-hero-inner {
+    width: calc(100% - 36px);
+    padding-top: 0;
+  }
+  .shared-section-hero .hero-title-compact {
+    max-width: 100%;
+    margin: 16px 0 18px;
+    font-size: clamp(40px, 10.5vw, 58px);
+    line-height: .98;
+  }
+  .shared-section-hero .page-hero-inner > p {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .shared-section-hero .section-hero-current {
+    margin-top: 26px;
+  }
+  .shared-section-hero .page-hero-mark {
+    font-size: 48vw;
+    right: -8%;
+    bottom: -10%;
+  }
 }
 @media (max-width: 480px) {
-  .shared-section-hero { min-height: 500px; height: 500px; }
-  .shared-section-hero .hero-title-compact { font-size: 39px; line-height: 1; }
-  .shared-section-hero .page-hero-inner > p { font-size: 12px; }
+  .shared-section-hero {
+    min-height: 500px;
+    height: 500px;
+  }
+  .shared-section-hero .hero-title-compact {
+    font-size: 39px;
+    line-height: 1;
+  }
+  .shared-section-hero .page-hero-inner > p {
+    font-size: 12px;
+  }
 }
-
-
-/* ============================================================
-   AJUSTE DE ESCALA + NOVAS AREAS
-   Mantemos a linguagem editorial e reduzimos a largura útil para
-   melhorar leitura, respiro e proporção em monitores grandes.
-   ============================================================ */
-:root {
-  --shell: 1240px;
-}
-
-/* Hero interno: título mais compacto e melhor equilibrado no desktop. */
-.shared-section-hero .page-hero-inner {
-  width: min(var(--shell), calc(100% - 96px));
-}
-.shared-section-hero .hero-title-compact {
-  max-width: 700px;
-  font-size: clamp(48px, 4.05vw, 66px);
-  line-height: .98;
-}
-.shared-section-hero .page-hero-inner > p {
-  max-width: 600px;
-}
-
-/* ---------- Cases de sucesso ---------- */
 .success-cases {
   padding: 118px 0 128px;
   background: #f1f4f6;
@@ -1814,8 +1827,6 @@ h1, h2, h3, p {
 .case-card:hover .case-arrow {
   color: #d8e2ea;
 }
-
-/* ---------- Empresas do grupo ---------- */
 .group-specialties {
   padding: 122px 0 132px;
   background: #fff;
@@ -1906,11 +1917,15 @@ h1, h2, h3, p {
 .group-specialty-content .text-link {
   margin-top: 22px;
 }
-.group-specialty--plast .case-tag { color: #2878c8; }
-.group-specialty--safety .case-tag { color: #159b68; }
-.group-specialty--supply .case-tag { color: #d44747; }
-
-/* ---------- Clientes: carrossel contínuo antes do catálogo ---------- */
+.group-specialty--plast .case-tag {
+  color: #2878c8;
+}
+.group-specialty--safety .case-tag {
+  color: #159b68;
+}
+.group-specialty--supply .case-tag {
+  color: #d44747;
+}
 .clients-carousel {
   padding: 112px 0 96px;
   background: #f5f7f8;
@@ -2007,14 +2022,18 @@ h1, h2, h3, p {
   opacity: 1;
 }
 @keyframes clientsLoop {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-33.333333%, 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.333333%, 0, 0);
+  }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .clients-track { animation-duration: 26s; }
+  .clients-track {
+    animation-duration: 26s;
+  }
 }
-
 @media (max-width: 1000px) {
   .cases-grid {
     grid-template-columns: 1fr 1fr;
@@ -2033,7 +2052,6 @@ h1, h2, h3, p {
     gap: 25px;
   }
 }
-
 @media (max-width: 700px) {
   .shared-section-hero .page-hero-inner {
     width: calc(100% - 36px);
@@ -2080,64 +2098,74 @@ h1, h2, h3, p {
     height: 96px;
   }
 }
-
-/* ============================================================
-   AJUSTE FINAL — HOME / HERO / CASES
-   ============================================================ */
-:root { --shell: 1400px; }
-
-.home-hero { min-height: 720px; height: min(100svh, 900px); }
-.hero-content { align-items: center; justify-content: flex-start; padding: 110px 0 70px; }
-.hero-copy { width: min(650px, 54vw); max-width: 650px; }
-.hero-copy h1 { max-width: 620px; margin: 16px 0 20px; font-size: clamp(48px, 4.25vw, 68px); line-height: .96; letter-spacing: -.045em; }
-.hero-copy p { max-width: 590px; font-size: 13px; line-height: 1.7; }
-.hero-actions { margin-top: 24px; }
-.hero-meta { bottom: 30px; }
-
-/* Conteúdo do hero sempre ocupa a coluna esquerda e nunca cria um bloco central enorme. */
-.home-hero .shell.hero-content { margin-left: max(32px, calc((100vw - var(--shell)) / 2)); margin-right: 0; }
-
-/* A navegação ganha o novo item sem apertar o header. */
-.desktop-nav { gap: 25px; }
-.desktop-nav a { white-space: nowrap; }
-
-/* Cases agora é uma página própria; a seção só existe nela. */
-.success-cases-page { padding-top: 120px; }
-.cases-page-hero .hero-title-compact { max-width: 760px; }
-.cases-page-hero .page-hero-inner { padding-top: 105px; }
-.cases-statement { background: #eef2f5; }
-
+.home-hero .shell.hero-content {
+  margin-left: max(48px, calc((100vw - var(--shell)) / 2));
+  margin-right: 0;
+  width: min(var(--shell), calc(100% - 96px));
+  padding-top: 90px;
+  padding-bottom: 90px;
+  height: 100%;
+}
+.success-cases-page {
+  padding-top: 120px;
+}
+.cases-page-hero .hero-title-compact {
+  max-width: 650px;
+}
+.cases-page-hero .page-hero-inner {
+  padding-top: 105px;
+}
+.cases-statement {
+  background: #eef2f5;
+}
 @media (max-width: 1200px) {
-  :root { --shell: 1180px; }
-  .home-hero .shell.hero-content { margin-left: 48px; }
-  .hero-copy { width: min(620px, 58vw); }
-  .hero-copy h1 { font-size: clamp(46px, 5vw, 62px); }
+  :root {
+    --shell: 1180px;
+  }
+  .home-hero .shell.hero-content {
+    margin-left: 48px;
+  }
+  .hero-copy {
+    width: min(620px, 58vw);
+  }
+  .hero-copy h1 {
+    font-size: clamp(46px, 5vw, 62px);
+  }
 }
-
 @media (max-width: 1000px) {
-  .home-hero .shell.hero-content { margin-left: auto; margin-right: auto; }
-  .hero-content { align-items: flex-end; padding-bottom: 135px; }
-  .hero-copy { width: min(700px, 100%); max-width: 700px; }
-  .hero-copy h1 { font-size: clamp(48px, 8vw, 70px); }
+  .home-hero .shell.hero-content {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-content {
+    align-items: flex-end;
+    padding-bottom: 135px;
+  }
+  .hero-copy {
+    width: min(700px, 100%);
+    max-width: 700px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(48px, 8vw, 70px);
+  }
 }
-
 @media (max-width: 700px) {
-  .home-hero .shell.hero-content { margin-inline: auto; }
-  .hero-content { padding-bottom: 135px; }
-  .hero-copy { width: 100%; }
-  .hero-copy h1 { max-width: 100%; font-size: clamp(42px, 11vw, 60px); }
-  .success-cases-page { padding-top: 82px; }
-}
-
-/* ============================================================
-   AJUSTE VISUAL FINAL — HERO HOME
-   O conteúdo permanece claramente na coluna esquerda, com escala
-   editorial menor e kicker em uma única linha.
-   ============================================================ */
-.eyebrow > span {
-  width: auto;
-  height: auto;
-  background: none;
+  .home-hero .shell.hero-content {
+    margin-inline: auto;
+  }
+  .hero-content {
+    padding-bottom: 135px;
+  }
+  .hero-copy {
+    width: 100%;
+  }
+  .hero-copy h1 {
+    max-width: 100%;
+    font-size: clamp(42px, 11vw, 60px);
+  }
+  .success-cases-page {
+    padding-top: 82px;
+  }
 }
 .eyebrow > span:first-child {
   width: 28px;
@@ -2155,44 +2183,10 @@ h1, h2, h3, p {
   background: none;
   white-space: nowrap;
 }
-
-.home-hero {
-  min-height: 700px;
-  height: min(100svh, 820px);
-}
-.home-hero .shell.hero-content {
-  width: min(var(--shell), calc(100% - 96px));
-  margin-left: max(48px, calc((100vw - var(--shell)) / 2));
-  margin-right: 0;
-  padding-top: 90px;
-  padding-bottom: 70px;
-}
-.hero-copy {
-  width: min(560px, 42vw);
-  max-width: 560px;
-}
-.hero-copy h1 {
-  max-width: 530px;
-  margin: 15px 0 17px;
-  font-size: clamp(44px, 3.35vw, 58px);
-  line-height: .98;
-  letter-spacing: -.04em;
-}
-.hero-copy p {
-  max-width: 510px;
-  margin-bottom: 22px;
-  font-size: 12px;
-  line-height: 1.65;
-}
-.hero-actions {
-  margin-top: 18px;
-  gap: 22px;
-}
 .hero-actions .button {
   min-height: 46px;
   padding: 0 18px;
 }
-
 @media (max-width: 1200px) {
   .home-hero .shell.hero-content {
     margin-left: 42px;
@@ -2204,7 +2198,6 @@ h1, h2, h3, p {
     font-size: clamp(42px, 4vw, 54px);
   }
 }
-
 @media (max-width: 1000px) {
   .home-hero .shell.hero-content {
     margin-inline: auto;
@@ -2216,7 +2209,6 @@ h1, h2, h3, p {
     font-size: clamp(42px, 7vw, 58px);
   }
 }
-
 @media (max-width: 700px) {
   .home-hero {
     min-height: 680px;
@@ -2242,73 +2234,25 @@ h1, h2, h3, p {
     white-space: normal;
   }
 }
-
-/* ============================================================
-   AJUSTE V4 — VÍDEO INTEGRAL DO HERO
-   O vídeo original é 1280x720 (16:9). O hero passa a respeitar
-   essa proporção para que nenhum trecho do vídeo seja cortado.
-   ============================================================ */
-.home-hero {
-  width: 100%;
-  height: 56.25vw;
-  min-height: 720px;
-  max-height: none;
-  aspect-ratio: 16 / 9;
-  background: #05090d;
-}
-
-.hero-video {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-  background: #05090d;
-}
-
-.hero-shade {
-  inset: 0;
-}
-
-.hero-grid {
-  inset: 0;
-}
-
-/* Mantém o conteúdo sobre a área esquerda sem deslocar o vídeo. */
-.home-hero .shell.hero-content {
-  height: 100%;
-  padding-top: 90px;
-  padding-bottom: 90px;
-}
-
 @media (max-width: 1200px) {
   .home-hero {
     min-height: 675px;
     height: 56.25vw;
   }
 }
-
 @media (max-width: 700px) {
   .home-hero {
     height: 56.25vw;
     min-height: 560px;
   }
-
   .hero-video {
     object-fit: contain;
   }
-
   .home-hero .shell.hero-content {
     padding-top: 100px;
     padding-bottom: 100px;
   }
 }
-
-/* ============================================================
-   AJUSTE V5 — HERO NO MESMO TAMANHO DA PRIMEIRA VERSÃO
-   Mantém a estrutura/altura original do Hero. Alteração focada
-   apenas na escala tipográfica e na leitura do conteúdo.
-   ============================================================ */
 @media (min-width: 1201px) {
   .home-hero {
     width: 100%;
@@ -2317,7 +2261,6 @@ h1, h2, h3, p {
     max-height: 560px;
     aspect-ratio: auto;
   }
-
   .hero-video {
     inset: -4%;
     width: 108%;
@@ -2325,18 +2268,15 @@ h1, h2, h3, p {
     object-fit: cover;
     object-position: center center;
   }
-
   .home-hero .shell.hero-content {
     height: 100%;
     padding-top: 70px;
     padding-bottom: 76px;
   }
-
   .hero-copy {
     width: min(610px, 52vw);
     max-width: 610px;
   }
-
   .hero-copy h1 {
     max-width: 590px;
     margin: 14px 0 18px;
@@ -2344,83 +2284,45 @@ h1, h2, h3, p {
     line-height: .98;
     letter-spacing: -.04em;
   }
-
   .hero-copy p {
     max-width: 570px;
     margin-bottom: 22px;
     font-size: 13px;
     line-height: 1.55;
   }
-
   .hero-actions {
     gap: 22px;
   }
-
   .hero-actions .button {
     min-height: 42px;
     padding: 0 18px;
     font-size: 11px;
   }
-
   .hero-copy .text-link {
     font-size: 11px;
   }
-
   .eyebrow-light {
     flex-direction: row;
     align-items: center;
     gap: 10px;
     white-space: nowrap;
   }
-
   .eyebrow-light > span:last-child {
     white-space: nowrap;
   }
 }
-
-/* ============================================================
-   AJUSTE FINAL — TIPOGRAFIA DOS HERÓIS INTERNOS
-   Somente Cases e Soluções. Não altera o tamanho, proporção ou
-   enquadramento do vídeo da Home.
-   ============================================================ */
-.shared-section-hero .hero-title-compact {
-  max-width: 650px;
-  font-size: clamp(44px, 3.45vw, 56px);
-  line-height: .98;
-  letter-spacing: -.04em;
-  margin: 16px 0 18px;
-}
-
-.cases-page-hero .hero-title-compact {
-  max-width: 650px;
-}
-
-.shared-section-hero .page-hero-inner > p {
-  max-width: 570px;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
 @media (max-width: 1100px) {
   .shared-section-hero .hero-title-compact {
     max-width: 620px;
     font-size: clamp(42px, 4.6vw, 52px);
   }
 }
-
 @media (max-width: 700px) {
   .shared-section-hero .hero-title-compact {
     max-width: 100%;
     font-size: clamp(38px, 9.5vw, 50px);
   }
 }
-
-/* ============================================================
-   AJUSTE FINAL — HERO HOME NO TAMANHO DO ÚLTIMO PRINT
-   Mantém a tipografia atual e altera somente a altura da Hero Home
-   para ocupar a altura inteira da viewport, como no último print.
-   O enquadramento/escala do vídeo permanece o mesmo.
-   ============================================================ */
 @media (min-width: 1201px) {
   .home-hero {
     width: 100%;
@@ -2430,27 +2332,18 @@ h1, h2, h3, p {
     aspect-ratio: auto;
   }
 }
-
-/* ============================================================
-   MOBILE / TABLET REFINEMENT — MAXCOMPANY
-   Hero integral, navegação touch-first e mesma linguagem editorial.
-   ============================================================ */
 html,
 body {
   max-width: 100%;
   overflow-x: hidden;
 }
-
 @media (max-width: 1200px) {
   :root {
     --mobile-gutter: clamp(22px, 5vw, 48px);
   }
-
   .shell {
     width: min(var(--shell), calc(100% - (var(--mobile-gutter) * 2)));
   }
-
-  /* Hero da home ocupa todo o viewport também em tablet e celular. */
   .home-hero {
     width: 100%;
     height: 100svh;
@@ -2458,7 +2351,6 @@ body {
     max-height: none;
     aspect-ratio: auto;
   }
-
   .hero-video {
     inset: 0;
     width: 100%;
@@ -2466,18 +2358,14 @@ body {
     object-fit: cover;
     object-position: center center;
   }
-
   .hero-shade {
-    background:
-      linear-gradient(90deg, rgba(3,8,12,.90) 0%, rgba(3,8,12,.62) 48%, rgba(3,8,12,.25) 100%),
+    background: linear-gradient(90deg, rgba(3,8,12,.90) 0%, rgba(3,8,12,.62) 48%, rgba(3,8,12,.25) 100%),
       linear-gradient(0deg, rgba(2,5,8,.88) 0%, rgba(2,5,8,.16) 58%, rgba(2,5,8,.48) 100%);
   }
-
   .hero-grid {
     opacity: .10;
     background-size: 100% 110px, 110px 100%;
   }
-
   .home-hero .shell.hero-content {
     width: min(var(--shell), calc(100% - (var(--mobile-gutter) * 2)));
     height: 100%;
@@ -2485,60 +2373,49 @@ body {
     padding: 0;
     align-items: center;
   }
-
   .hero-copy {
     width: min(660px, 72vw);
     max-width: 660px;
     padding-top: 4vh;
   }
-
   .hero-copy h1 {
     max-width: 650px;
     margin: 16px 0 20px;
     font-size: clamp(48px, 6.6vw, 68px);
     line-height: .97;
   }
-
   .hero-copy p {
     max-width: 590px;
     margin-bottom: 24px;
     font-size: 13px;
     line-height: 1.65;
   }
-
   .hero-actions {
     gap: 24px;
   }
-
   .hero-actions .button,
   .hero-actions .text-link {
     min-height: 48px;
   }
-
   .hero-meta {
     width: min(var(--shell), calc(100% - (var(--mobile-gutter) * 2)));
     bottom: max(24px, env(safe-area-inset-bottom));
   }
 }
-
 @media (max-width: 1000px) {
   .site-header {
     width: 100%;
   }
-
   .utility-bar {
     padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
   }
-
   .nav-inner {
     min-height: 76px;
     padding-top: env(safe-area-inset-top);
   }
-
   .brand {
     width: clamp(132px, 24vw, 170px);
   }
-
   .menu-button {
     display: grid;
     place-content: center;
@@ -2548,12 +2425,10 @@ body {
     padding: 0;
     -webkit-tap-highlight-color: transparent;
   }
-
   .menu-button span {
     width: 23px;
     margin: 4px auto;
   }
-
   .mobile-panel {
     position: fixed;
     top: calc(28px + 76px + env(safe-area-inset-top));
@@ -2569,15 +2444,12 @@ body {
     border-top: 1px solid rgba(255,255,255,.10);
     box-shadow: 0 30px 80px rgba(0,0,0,.42);
   }
-
   .site-header.is-open .mobile-panel {
     display: block;
   }
-
   .mobile-nav {
     gap: 0;
   }
-
   .mobile-nav a {
     min-height: 60px;
     display: flex;
@@ -2591,26 +2463,22 @@ body {
     letter-spacing: -.02em;
     -webkit-tap-highlight-color: transparent;
   }
-
   .mobile-nav a span {
     flex: 0 0 auto;
     color: #fff;
     font-size: 18px;
     transition: transform .2s ease, color .2s ease;
   }
-
   .mobile-nav a:active span,
   .mobile-nav a:hover span {
     color: var(--amber);
     transform: translateX(3px);
   }
-
   .mobile-contact {
     gap: 8px;
     margin-top: 30px;
     padding-top: 6px;
   }
-
   .mobile-contact a {
     min-height: 32px;
     display: inline-flex;
@@ -2618,26 +2486,20 @@ body {
     color: #c7d0d8;
     font-size: 11px;
   }
-
   .hero-content {
     padding-bottom: 0;
   }
-
   .hero-meta {
     grid-template-columns: 1fr auto;
   }
-
   .hero-scroll {
     display: block;
   }
-
-  /* Heroes internos continuam cinematográficos e proporcionais no tablet. */
   .shared-section-hero {
     min-height: 100svh;
     height: 100svh;
     padding-bottom: 56px;
   }
-
   .shared-section-hero .page-hero-inner {
     width: min(var(--shell), calc(100% - (var(--mobile-gutter) * 2)));
     padding-top: 0;
@@ -2646,84 +2508,66 @@ body {
     justify-content: center;
     min-height: 100%;
   }
-
   .shared-section-hero .hero-title-compact {
     max-width: 720px;
     font-size: clamp(46px, 6vw, 64px);
   }
-
   .shared-section-hero .page-hero-inner > p {
     max-width: 600px;
   }
 }
-
 @media (max-width: 700px) {
   :root {
     --mobile-gutter: 18px;
   }
-
   .shell {
     width: calc(100% - 36px);
   }
-
   .utility-bar {
     height: 28px;
   }
-
   .nav-inner {
     min-height: 70px;
   }
-
   .brand {
     width: 145px;
   }
-
   .mobile-panel {
     top: calc(28px + 70px + env(safe-area-inset-top));
     height: calc(100dvh - (28px + 70px + env(safe-area-inset-top)));
     padding: 12px 18px 28px;
   }
-
   .home-hero {
     height: 100svh;
     min-height: 100svh;
   }
-
   .hero-video {
     object-position: 57% center;
   }
-
   .hero-shade {
-    background:
-      linear-gradient(90deg, rgba(3,8,12,.92) 0%, rgba(3,8,12,.68) 62%, rgba(3,8,12,.30) 100%),
+    background: linear-gradient(90deg, rgba(3,8,12,.92) 0%, rgba(3,8,12,.68) 62%, rgba(3,8,12,.30) 100%),
       linear-gradient(0deg, rgba(2,5,8,.90) 0%, rgba(2,5,8,.20) 58%, rgba(2,5,8,.50) 100%);
   }
-
   .home-hero .shell.hero-content {
     width: calc(100% - 36px);
   }
-
   .hero-copy {
     width: 100%;
     max-width: 560px;
     padding-top: 5vh;
   }
-
   .eyebrow-light {
     gap: 8px;
     font-size: 8px;
     letter-spacing: .16em;
   }
-
   .eyebrow-light > span:first-child {
     width: 22px;
     flex-basis: 22px;
   }
-
   .eyebrow-light > span:last-child {
     white-space: nowrap;
   }
-
   .hero-copy h1 {
     max-width: 100%;
     margin: 14px 0 18px;
@@ -2731,91 +2575,74 @@ body {
     line-height: .98;
     letter-spacing: -.045em;
   }
-
   .hero-copy p {
     max-width: 100%;
     margin-bottom: 22px;
     font-size: 12px;
     line-height: 1.6;
   }
-
   .hero-actions {
     width: 100%;
     align-items: stretch;
     flex-direction: column;
     gap: 14px;
   }
-
   .hero-actions .button {
     width: 100%;
     min-height: 50px;
   }
-
   .hero-actions .text-link {
     align-self: flex-start;
     min-height: 38px;
     padding-top: 7px;
   }
-
   .hero-meta {
     width: calc(100% - 36px);
     bottom: max(18px, env(safe-area-inset-bottom));
   }
-
   .hero-index strong {
     font-size: 16px;
   }
-
   .hero-index span {
     font-size: 8px;
   }
-
   .hero-scroll {
     font-size: 7px;
     letter-spacing: .14em;
   }
-
   .shared-section-hero {
     min-height: 100svh;
     height: 100svh;
     padding-bottom: 42px;
   }
-
   .shared-section-hero .page-hero-inner {
     width: calc(100% - 36px);
     padding-top: 12vh;
     justify-content: center;
   }
-
   .shared-section-hero .hero-title-compact {
     max-width: 100%;
     margin: 14px 0 17px;
     font-size: clamp(38px, 10.5vw, 52px);
     line-height: .98;
   }
-
   .shared-section-hero .page-hero-inner > p {
     max-width: 100%;
     font-size: 12px;
     line-height: 1.6;
   }
-
   .shared-section-hero .section-hero-current {
     margin-top: 28px;
   }
-
   .shared-section-hero .page-hero-mark {
     font-size: 52vw;
     right: -12%;
     bottom: -5%;
   }
-
-  /* Touch: estados hover não ficam presos depois de tocar. */
   .button:hover,
   .text-link:hover {
     transform: none;
   }
-
   .mobile-nav a,
   .button,
   .text-link,
@@ -2824,80 +2651,102 @@ body {
     touch-action: manipulation;
   }
 }
-
 @media (max-width: 380px) {
   .brand {
     width: 132px;
   }
-
   .hero-copy h1 {
     font-size: 36px;
   }
-
   .hero-copy p {
     font-size: 11px;
   }
-
   .hero-scroll {
     display: none;
   }
 }
-
-
-/* ============================================================
-   FINAL POLISH — MOBILE / TABLET + FOOTER
-   Refinements isolated to preserve the desktop composition.
-   ============================================================ */
-.footer-brand { align-content: start; }
-.footer-brand p { margin-top: 0; max-width: 330px; }
-.footer-main { grid-template-columns: 1.35fr 1fr 1.15fr 1fr; }
-
+.footer-brand {
+  align-content: start;
+}
 @media (max-width: 1000px) {
-  html { scroll-padding-top: 98px; }
-  body { overscroll-behavior-x: none; }
-  .site-header { -webkit-backdrop-filter: none; }
+  html {
+    scroll-padding-top: 98px;
+  }
+  body {
+    overscroll-behavior-x: none;
+  }
+  .site-header {
+    -webkit-backdrop-filter: none;
+  }
   .nav-inner {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
-  .menu-button { border-radius: 0; outline-offset: 4px; }
-  .menu-button:focus-visible { outline: 1px solid rgba(255,255,255,.65); }
+  .menu-button {
+    border-radius: 0;
+    outline-offset: 4px;
+  }
+  .menu-button:focus-visible {
+    outline: 1px solid rgba(255,255,255,.65);
+  }
   .mobile-panel {
     padding-left: max(var(--mobile-gutter), env(safe-area-inset-left));
     padding-right: max(var(--mobile-gutter), env(safe-area-inset-right));
     padding-bottom: max(34px, env(safe-area-inset-bottom));
   }
-  .mobile-nav a { min-height: 64px; }
+  .mobile-nav a {
+    min-height: 64px;
+  }
   .shared-section-hero .page-hero-inner {
     min-height: 100%;
     padding-top: calc(98px + env(safe-area-inset-top));
     padding-bottom: 34px;
     justify-content: center;
   }
-  .shared-section-hero .hero-title-compact { text-wrap: balance; }
-  .shared-section-hero .section-hero-current { margin-top: 24px; }
-  .button { min-height: 50px; }
-  .text-link { min-height: 40px; align-items: center; }
+  .shared-section-hero .hero-title-compact {
+    text-wrap: balance;
+  }
+  .shared-section-hero .section-hero-current {
+    margin-top: 24px;
+  }
+  .button {
+    min-height: 50px;
+  }
+  .text-link {
+    min-height: 40px;
+    align-items: center;
+  }
   .footer-main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 38px 28px;
   }
 }
-
 @media (max-width: 700px) {
-  .home-hero { min-height: 100svh; height: 100svh; }
+  .home-hero {
+    min-height: 100svh;
+    height: 100svh;
+  }
   .home-hero .shell.hero-content {
     min-height: 100svh;
     padding-top: calc(28px + 70px + env(safe-area-inset-top));
     padding-bottom: calc(76px + env(safe-area-inset-bottom));
     align-items: center;
   }
-  .hero-copy { padding-top: 0; }
-  .hero-copy h1 { text-wrap: balance; }
-  .hero-copy p { max-width: 34em; }
-  .hero-actions .button { width: min(100%, 360px); }
-  .hero-actions .text-link { width: fit-content; }
-
+  .hero-copy {
+    padding-top: 0;
+  }
+  .hero-copy h1 {
+    text-wrap: balance;
+  }
+  .hero-copy p {
+    max-width: 34em;
+  }
+  .hero-actions .button {
+    width: min(100%, 360px);
+  }
+  .hero-actions .text-link {
+    width: fit-content;
+  }
   .shared-section-hero {
     min-height: 100svh;
     height: 100svh;
@@ -2922,35 +2771,62 @@ body {
     font-size: 12px;
     line-height: 1.65;
   }
-  .shared-section-hero .section-hero-current { margin-top: 24px; }
-  .shared-section-hero .page-hero-mark { font-size: 48vw; opacity: .45; }
-
-  .site-footer { padding: 58px 0 22px; }
-  .footer-main { grid-template-columns: 1fr 1fr; gap: 34px 24px; }
+  .shared-section-hero .section-hero-current {
+    margin-top: 24px;
+  }
+  .shared-section-hero .page-hero-mark {
+    font-size: 48vw;
+    opacity: .45;
+  }
+  .site-footer {
+    padding: 58px 0 22px;
+  }
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 34px 24px;
+  }
   .footer-brand {
     grid-column: 1 / -1;
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(255,255,255,.08);
   }
-  .footer-brand p { max-width: 31em; margin-bottom: 0; font-size: 11px; line-height: 1.7; }
-  .footer-column a, .footer-column > span:not(.footer-label) { font-size: 10px; }
-  .footer-label { font-size: 8px; }
-  .footer-brands img { width: 34px; height: 34px; }
-  .footer-bottom { margin-top: 42px; padding-top: 16px; font-size: 8px; }
+  .footer-brand p {
+    max-width: 31em;
+    margin-bottom: 0;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .footer-column a, .footer-column > span:not(.footer-label) {
+    font-size: 10px;
+  }
+  .footer-label {
+    font-size: 8px;
+  }
+  .footer-brands img {
+    width: 34px;
+    height: 34px;
+  }
+  .footer-bottom {
+    margin-top: 42px;
+    padding-top: 16px;
+    font-size: 8px;
+  }
 }
-
 @media (max-width: 420px) {
-  .shared-section-hero .hero-title-compact { font-size: clamp(36px, 10vw, 46px); }
-  .shared-section-hero .page-hero-inner > p { font-size: 11px; }
-  .footer-main { gap: 30px 18px; }
-  .footer-bottom { display: grid; gap: 7px; }
+  .shared-section-hero .hero-title-compact {
+    font-size: clamp(36px, 10vw, 46px);
+  }
+  .shared-section-hero .page-hero-inner > p {
+    font-size: 11px;
+  }
+  .footer-main {
+    gap: 30px 18px;
+  }
+  .footer-bottom {
+    display: grid;
+    gap: 7px;
+  }
 }
-
-/* ============================================================
-   CINEMATIC VIDEO HANDOFF
-   Keeps the shared hero frame continuous between static pages.
-   The same treatment applies to desktop, tablet and mobile.
-   ============================================================ */
 html.page-transition-enter::after,
 html.page-transition-leave::after {
   content: "";
@@ -2958,8 +2834,7 @@ html.page-transition-leave::after {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  background:
-    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+  background: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
     #050a0f;
   background-size: 100% 120px, 120px 100%, auto;
@@ -2972,7 +2847,6 @@ html.page-transition-enter.page-transition-ready::after {
 html.page-transition-leave::after {
   transition: opacity .46s cubic-bezier(.76,0,.24,1);
 }
-
 .hero-video.video-handoff,
 .section-hero-video.video-handoff {
   opacity: 0;
