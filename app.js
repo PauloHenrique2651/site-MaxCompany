@@ -1,3 +1,16 @@
+/* Ultra-light page handoff: keeps navigation between the static sections
+   visually continuous while the shared hero video restores its exact frame. */
+(() => {
+  const transitionFlag = "maxcompany-page-transition";
+  if (sessionStorage.getItem(transitionFlag) === "1") {
+    document.documentElement.classList.add("page-transition-enter");
+    sessionStorage.removeItem(transitionFlag);
+    window.setTimeout(() => {
+      document.documentElement.classList.add("page-transition-ready");
+    }, 1800);
+  }
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   /* Home loading: brings the catalog loader identity into the first
      impression, but with a completely different editorial composition. */
@@ -5,7 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const homeLoaderProgress = document.getElementById("home-loader-progress");
   const homeLoaderPercent = document.getElementById("home-loader-percent");
 
-  if (homeLoader) {
+  if (homeLoader && document.documentElement.classList.contains("page-transition-enter")) {
+    /* Returning to the home page from another section: the cinematic handoff
+       already covers the loading window, so never interrupt the shared video
+       with the full 3-second intro again. */
+    homeLoader.remove();
+  } else if (homeLoader) {
     document.documentElement.classList.add("home-loading");
     document.body.classList.add("home-loading");
 
@@ -62,17 +80,48 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   if (header && menuButton) {
+    const mobilePanel = header.querySelector(".mobile-panel");
+
+    if (mobilePanel) {
+      if (!mobilePanel.id) mobilePanel.id = "mobile-navigation";
+      menuButton.setAttribute("aria-controls", mobilePanel.id);
+    }
+
+    const closeMobileMenu = () => {
+      header.classList.remove("is-open");
+      document.body.classList.remove("menu-open");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Abrir menu");
+    };
+
     menuButton.addEventListener("click", () => {
       const open = header.classList.toggle("is-open");
       document.body.classList.toggle("menu-open", open);
       menuButton.setAttribute("aria-expanded", String(open));
       menuButton.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
     });
-    header.querySelectorAll(".mobile-panel a").forEach(a => a.addEventListener("click", () => {
-      header.classList.remove("is-open");
-      document.body.classList.remove("menu-open");
-      menuButton.setAttribute("aria-expanded", "false");
-    }));
+
+    header.querySelectorAll(".mobile-panel a").forEach(a => {
+      a.addEventListener("click", closeMobileMenu);
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && header.classList.contains("is-open")) {
+        closeMobileMenu();
+        menuButton.focus({ preventScroll: true });
+      }
+    });
+
+    document.addEventListener("click", event => {
+      if (!header.classList.contains("is-open")) return;
+      if (!header.contains(event.target)) closeMobileMenu();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 1000 && header.classList.contains("is-open")) {
+        closeMobileMenu();
+      }
+    }, { passive: true });
   }
 
   /* One shared 20-second WebM across the whole experience.
@@ -95,13 +144,31 @@ document.addEventListener("DOMContentLoaded", () => {
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
+    video.classList.add("video-handoff");
+
+    const reveal = () => {
+      video.classList.add("video-ready");
+      document.documentElement.classList.add("video-ready");
+      document.documentElement.classList.add("page-transition-ready");
+    };
 
     const restore = () => {
       const savedTime = Number(sessionStorage.getItem(STORAGE_KEY) || 0);
+      try { video.pause(); } catch (_) {}
+
       if (Number.isFinite(savedTime) && savedTime > 0 && savedTime < (video.duration || Infinity)) {
-        try { video.currentTime = savedTime; } catch (_) {}
+        try {
+          video.currentTime = savedTime;
+        } catch (_) {}
       }
-      video.play().catch(() => {});
+
+      const start = () => {
+        video.play().catch(() => {});
+        window.requestAnimationFrame(() => window.requestAnimationFrame(reveal));
+      };
+
+      if (video.readyState >= 3) start();
+      else video.addEventListener("canplay", start, { once: true });
     };
 
     if (video.readyState >= 1) restore();
@@ -185,9 +252,38 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", updateCatalogOnScroll, { passive: true });
   }
 
-  /* Save the exact position before any navigation triggered by a click. */
+  /* Save the exact position before navigation and use a short cinematic
+     handoff instead of exposing a loading/repaint jump between sections. */
   document.querySelectorAll("a[href]").forEach(link => {
-    link.addEventListener("click", saveHeroVideoTime, { capture: true });
+    link.addEventListener("click", event => {
+      saveHeroVideoTime();
+
+      const href = link.getAttribute("href") || "";
+      const isInternalPage =
+        !event.defaultPrevented &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.shiftKey &&
+        !event.altKey &&
+        link.target !== "_blank" &&
+        href &&
+        !href.startsWith("#") &&
+        !href.startsWith("mailto:") &&
+        !href.startsWith("tel:") &&
+        !href.startsWith("https://wa.me/") &&
+        !href.startsWith("http://") &&
+        !href.startsWith("https://");
+
+      if (isInternalPage) {
+        event.preventDefault();
+        sessionStorage.setItem("maxcompany-page-transition", "1");
+        document.documentElement.classList.add("page-transition-leave");
+
+        window.setTimeout(() => {
+          window.location.href = href;
+        }, 360);
+      }
+    }, { capture: true });
   });
 
   window.addEventListener("pagehide", saveHeroVideoTime);
