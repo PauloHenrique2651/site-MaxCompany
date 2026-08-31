@@ -24,11 +24,11 @@ const CONFIG = {
     },
 
     preload: {
-        range: 2
+        range: 1
     },
 
     loader: {
-        duration: 4200
+        duration: 2200
     }
 };
 
@@ -76,30 +76,49 @@ const loaderProgressBar = document.getElementById('loader-progress-bar');
  * Inicializa o loading.
  */
 function initLoader() {
+    if (!loader) return;
+
+    // O loading precisa ser perceptível e só termina depois que
+    // o flipbook estiver pronto + o tempo mínimo de exibição.
     const duration = CONFIG.loader.duration;
     const startTime = performance.now();
 
-    function updateLoader(currentTime) {
-        const elapsed = currentTime - startTime;
+    const firstPages = Array.from(flipbook.querySelectorAll('img')).slice(0, 2);
+    const imagesReady = Promise.all(firstPages.map(image => new Promise(resolve => {
+        if (image.complete && image.naturalWidth > 0) {
+            resolve();
+            return;
+        }
+        const done = () => resolve();
+        image.addEventListener('load', done, { once: true });
+        image.addEventListener('error', done, { once: true });
+    })));
+
+    let animationFrame;
+    const updateLoader = now => {
+        const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const percentage = Math.floor(progress * 100);
+        const percentage = Math.round(progress * 100);
 
-        if (loaderPercentage) {
-            loaderPercentage.textContent = percentage;
-        }
-
-        if (loaderProgressBar) {
-            loaderProgressBar.style.width = `${percentage}%`;
-        }
+        if (loaderPercentage) loaderPercentage.textContent = String(percentage);
+        if (loaderProgressBar) loaderProgressBar.style.width = `${percentage}%`;
 
         if (progress < 1) {
-            requestAnimationFrame(updateLoader);
+            animationFrame = requestAnimationFrame(updateLoader);
         }
-    }
+    };
 
-    requestAnimationFrame(updateLoader);
-    setTimeout(hideLoader, duration);
+    animationFrame = requestAnimationFrame(updateLoader);
+    const minimumVisibleTime = new Promise(resolve => setTimeout(resolve, duration));
+
+    Promise.all([imagesReady, minimumVisibleTime]).then(() => {
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+        if (loaderPercentage) loaderPercentage.textContent = '100';
+        if (loaderProgressBar) loaderProgressBar.style.width = '100%';
+        hideLoader();
+    });
 }
+
 
 
 /**
@@ -111,7 +130,7 @@ function hideLoader() {
     }
 
     loader.classList.add('is-hidden');
-    setTimeout(() => loader.remove(), 800);
+    setTimeout(() => loader.remove(), 280);
 }
 
 
@@ -175,7 +194,7 @@ function configureImageLoading(image, pageNumber) {
     image.draggable = false;
     image.decoding = 'async';
 
-    if (pageNumber <= 4) {
+    if (pageNumber <= 2) {
         image.fetchPriority = 'high';
     } else {
         image.loading = 'lazy';
@@ -294,7 +313,7 @@ function initBook() {
         width: size.width,
         height: size.height,
         display: getDisplayMode(),
-        pages: TOTAL_PAGES,
+        // As páginas já foram criadas no DOM acima; o Turn.js deve contá-las sozinho.
         autoCenter: true,
         acceleration: true,
         gradients: true,
@@ -415,8 +434,21 @@ function scrollToActiveThumbnail() {
 // NAVEGAÇÃO
 // ============================================================
 
+function ensurePageReady(pageNumber) {
+    const page = validatePageNumber(pageNumber);
+    const node = flipbook?.querySelector(`[data-page="${page}"] img`);
+    if (!node) return;
+    if (!node.getAttribute('src')) node.src = getPageSource(page);
+    node.loading = 'eager';
+    node.fetchPriority = 'high';
+    node.decoding = 'async';
+    preloadPage(page - 1);
+    preloadPage(page + 1);
+}
+
 function goToPage(page) {
     const targetPage = validatePageNumber(page);
+    ensurePageReady(targetPage);
 
     if (bookReady) {
         $('#flipbook').turn('page', targetPage);
@@ -820,6 +852,21 @@ function initResizeHandler() {
 
 
 // ============================================================
+// CONTROLE EXTERNO — CATEGORIAS DO SITE
+// ============================================================
+window.addEventListener("message", event => {
+    if (window.location.protocol !== "file:" && event.origin !== window.location.origin) return;
+    const data = event.data || {};
+    if (data.type !== "maxcompany:catalog-page") return;
+    const page = validatePageNumber(data.page);
+    if (!bookReady) {
+        window.setTimeout(() => goToPage(page), 120);
+        return;
+    }
+    goToPage(page);
+});
+
+// ============================================================
 // INICIALIZAÇÃO
 // ============================================================
 
@@ -827,6 +874,20 @@ function initializeCatalog() {
     createPages();
     applyZoom();
     initBook();
+
+    // Deep-link support: product/category pages can open the exact catalog page.
+    const requestedPage = Number(new URLSearchParams(window.location.search).get("page"));
+    if (Number.isFinite(requestedPage) && requestedPage >= 1 && requestedPage <= TOTAL_PAGES) {
+        window.setTimeout(() => goToPage(requestedPage), 120);
+    }
+
+    const productName = new URLSearchParams(window.location.search).get("produto");
+    if (productName && typeof window.gtag === "function") {
+        window.gtag("event", "catalog_product_open", {
+            product_slug: productName,
+            catalog_page: Number.isFinite(requestedPage) ? requestedPage : 1
+        });
+    }
     initNavigationClickAreas();
     initPinchZoom();
     initLoader();

@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 /* ============================================================
    RESET / BASE
-   ============================================================ */ * {
+   ============================================================ */
+* {
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -17,7 +19,8 @@ body {
 }
 /* ============================================================
    APLICAÇÃO
-   ============================================================ */ .app {
+   ============================================================ */
+.app {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -26,7 +29,8 @@ body {
 }
 /* ============================================================
    ÁREA PRINCIPAL
-   ============================================================ */ main {
+   ============================================================ */
+main {
   position: relative;
   z-index: 1;
   display: flex;
@@ -36,7 +40,8 @@ body {
 }
 /* ============================================================
    LEITOR
-   ============================================================ */ .reader {
+   ============================================================ */
+.reader {
   position: relative;
   display: flex;
   align-items: center;
@@ -48,7 +53,8 @@ body {
 }
 /* ============================================================
    ÁREA DO LIVRO
-   ============================================================ */ .book-wrap {
+   ============================================================ */
+.book-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,7 +65,8 @@ body {
 }
 /* ============================================================
    FLIPBOOK
-   ============================================================ */ .flipbook {
+   ============================================================ */
+.flipbook {
   position: relative;
   transform-origin: center center;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
@@ -69,8 +76,9 @@ body {
 }
 /* ============================================================
    DOBRA CENTRAL DO LIVRO
-   ============================================================ */ .flipbook::before {
-  content: "";
+   ============================================================ */
+.flipbook::before {
+  content: '';
   position: absolute;
   z-index: 100;
   top: 0;
@@ -79,13 +87,22 @@ body {
   width: 24px;
   transform: translateX(-50%);
   pointer-events: none;
-  background: linear-gradient( 90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 15%, rgba(0, 0, 0, 0.28) 42%, rgba(255, 255, 255, 0.18) 50%, rgba(0, 0, 0, 0.30) 60%, rgba(0, 0, 0, 0.06) 85%, rgba(0, 0, 0, 0) 100% );
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.05) 15%,
+    rgba(0, 0, 0, 0.28) 42%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(0, 0, 0, 0.3) 60%,
+    rgba(0, 0, 0, 0.06) 85%,
+    rgba(0, 0, 0, 0) 100%
+  );
   filter: blur(1px);
   mix-blend-mode: multiply;
   opacity: 0.9;
 }
 .flipbook::after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 99;
   top: 0;
@@ -94,13 +111,21 @@ body {
   width: 4px;
   transform: translateX(-50%);
   pointer-events: none;
-  background: linear-gradient( 90deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.30), rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.02) );
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.03),
+    rgba(0, 0, 0, 0.48),
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 0, 0, 0.42),
+    rgba(0, 0, 0, 0.02)
+  );
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.28);
   opacity: 0.72;
 }
 /* ============================================================
    PÁGINAS
-   ============================================================ */ .catalog-page {
+   ============================================================ */
+.catalog-page {
   position: relative;
   overflow: hidden;
   background: #fff;
@@ -109,8 +134,10 @@ body {
 }
 /* ============================================================
    SOMBRA NAS LATERAIS
-   ============================================================ */ .catalog-page.page-left::after, .catalog-page.page-right::after {
-  content: "";
+   ============================================================ */
+.catalog-page.page-left::after,
+.catalog-page.page-right::after {
+  content: '';
   position: absolute;
   z-index: 5;
   top: 0;
@@ -120,15 +147,16 @@ body {
 }
 .catalog-page.page-left::after {
   right: 0;
-  background: linear-gradient( 90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.14) );
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.14));
 }
 .catalog-page.page-right::after {
   left: 0;
-  background: linear-gradient( 90deg, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0) );
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0));
 }
 /* ============================================================
    IMAGENS DAS PÁGINAS
-   ============================================================ */ .catalog-page img {
+   ============================================================ */
+.catalog-page img {
   display: block;
   width: 100%;
   height: 100%;
@@ -140,7 +168,8 @@ body {
 }
 /* ============================================================
    BOTÃO DO CATÁLOGO COMPLETO
-   ============================================================ */ .download {
+   ============================================================ */
+.download {
   position: absolute;
   z-index: 50;
   top: 12px;
@@ -155,18 +184,21 @@ body {
   line-height: 1;
   white-space: nowrap;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .download:hover {
   background: #fff;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.20);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
 }
 .download:active {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 /* ============================================================
    MINIATURAS
-   ============================================================ */ .thumbnails {
+   ============================================================ */
+.thumbnails {
   z-index: 8;
   display: flex;
   flex-direction: column;
@@ -178,7 +210,8 @@ body {
 }
 /* ============================================================
    LISTA DE MINIATURAS
-   ============================================================ */ .thumb-list {
+   ============================================================ */
+.thumb-list {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -195,7 +228,8 @@ body {
 }
 /* ============================================================
    SCROLLBAR DAS MINIATURAS
-   ============================================================ */ .thumb-list::-webkit-scrollbar {
+   ============================================================ */
+.thumb-list::-webkit-scrollbar {
   width: 4px;
 }
 .thumb-list::-webkit-scrollbar-track {
@@ -207,7 +241,8 @@ body {
 }
 /* ============================================================
    MINIATURA
-   ============================================================ */ .thumb {
+   ============================================================ */
+.thumb {
   position: relative;
   display: block;
   width: 78px;
@@ -220,8 +255,11 @@ body {
   background: #eee;
   cursor: pointer;
   opacity: 0.82;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.20);
-  transition: opacity 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
 }
 .thumb:hover {
   opacity: 1;
@@ -230,14 +268,18 @@ body {
 }
 /* ============================================================
    MINIATURA ATIVA
-   ============================================================ */ .thumb.active {
+   ============================================================ */
+.thumb.active {
   opacity: 1;
   border: 2px solid #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 3px 11px rgba(0, 0, 0, 0.30);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    0 3px 11px rgba(0, 0, 0, 0.3);
 }
 /* ============================================================
    IMAGEM DA MINIATURA
-   ============================================================ */ .thumb img {
+   ============================================================ */
+.thumb img {
   display: block;
   width: 100%;
   height: 100%;
@@ -245,7 +287,8 @@ body {
 }
 /* ============================================================
    NÚMERO DA PÁGINA
-   ============================================================ */ .thumb-number {
+   ============================================================ */
+.thumb-number {
   position: absolute;
   z-index: 2;
   top: 4px;
@@ -265,7 +308,8 @@ body {
 }
 /* ============================================================
    LOADING INICIAL — MAXCOMPANY PREMIUM
-   ============================================================ */ .catalog-loader {
+   ============================================================ */
+.catalog-loader {
   position: fixed;
   z-index: 9999;
   inset: 0;
@@ -276,11 +320,14 @@ body {
   background: #282828;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.7s ease, visibility 0.7s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 /* Marca d'água gigante: a identidade visual fica presente sem competir
-   com o conteúdo central. */ .catalog-loader::before {
-  content: "";
+   com o conteúdo central. */
+.catalog-loader::before {
+  content: '';
   position: absolute;
   z-index: 0;
   top: 50%;
@@ -288,18 +335,23 @@ body {
   width: min(780px, 92vw);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  background: url("assets/maxcompany-watermark.png") center / contain no-repeat;
+  background: url('assets/maxcompany-watermark.png') center / contain no-repeat;
   opacity: 0.085;
   filter: grayscale(1) brightness(1.12);
   pointer-events: none;
 }
 /* Um segundo nível extremamente sutil de profundidade, sem criar círculo
-   ou halo atrás da marca principal. */ .catalog-loader::after {
-  content: "";
+   ou halo atrás da marca principal. */
+.catalog-loader::after {
+  content: '';
   position: absolute;
   z-index: 0;
   inset: 0;
-  background: radial-gradient( circle at center, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0) 42% );
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.035) 0%,
+    rgba(255, 255, 255, 0) 42%
+  );
   pointer-events: none;
 }
 .catalog-loader.is-hidden {
@@ -324,7 +376,7 @@ body {
   max-height: 82px;
   object-fit: contain;
   margin-bottom: 14px;
-  filter: drop-shadow(0 8px 24px rgba(0,0,0,.24));
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.24));
 }
 .loader-slogan {
   display: block;
@@ -332,8 +384,8 @@ body {
   height: auto;
   margin: 0 auto 34px;
   object-fit: contain;
-  opacity: .96;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,.18));
+  opacity: 0.96;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18));
 }
 .loader-text {
   margin-bottom: 18px;
@@ -343,8 +395,36 @@ body {
   letter-spacing: 2.8px;
   text-transform: none;
 }
+
+.loader-progress {
+  width: min(260px, 72vw);
+  height: 3px;
+  margin: 0 auto 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.loader-progress-bar {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.92);
+  transition: width 0.08s linear;
+}
+
+.loader-percentage {
+  margin-bottom: 22px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  font-variant-numeric: tabular-nums;
+}
 /* As três empresas são os próprios pontos do loading.
-   A sequência azul → verde → vermelho indica o progresso visual. */ .loader-companies {
+   A sequência azul → verde → vermelho indica o progresso visual. */
+.loader-companies {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -357,9 +437,9 @@ body {
   justify-content: center;
   width: 46px;
   height: 46px;
-  opacity: .30;
-  transform: translate3d(0, 0, 0) scale(.88);
-  animation: loaderCompanyPulse 2.25s cubic-bezier(.45, 0, .55, 1) infinite;
+  opacity: 0.3;
+  transform: translate3d(0, 0, 0) scale(0.88);
+  animation: loaderCompanyPulse 2.25s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   will-change: transform, opacity;
   backface-visibility: hidden;
   transform-origin: center;
@@ -371,26 +451,28 @@ body {
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
-  filter: drop-shadow(0 7px 16px rgba(0,0,0,.22));
+  filter: drop-shadow(0 7px 16px rgba(0, 0, 0, 0.22));
 }
 .loader-company-1 {
   animation-delay: 0s;
 }
 .loader-company-2 {
-  animation-delay: .75s;
+  animation-delay: 0.75s;
 }
 .loader-company-3 {
   animation-delay: 1.5s;
 }
 /* Pulso contínuo e suave: cada logo assume o destaque sem
-   saltos bruscos, criando uma onda visual entre as três marcas. */ @keyframes loaderCompanyPulse {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) scale(.88);
-    opacity: .30;
+   saltos bruscos, criando uma onda visual entre as três marcas. */
+@keyframes loaderCompanyPulse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.88);
+    opacity: 0.3;
   }
   20% {
-    transform: translate3d(0, -1px, 0) scale(.94);
-    opacity: .48;
+    transform: translate3d(0, -1px, 0) scale(0.94);
+    opacity: 0.48;
   }
   42% {
     transform: translate3d(0, -2px, 0) scale(1.06);
@@ -398,11 +480,11 @@ body {
   }
   58% {
     transform: translate3d(0, -1px, 0) scale(1.02);
-    opacity: .88;
+    opacity: 0.88;
   }
   76% {
-    transform: translate3d(0, 0, 0) scale(.94);
-    opacity: .52;
+    transform: translate3d(0, 0, 0) scale(0.94);
+    opacity: 0.52;
   }
 }
 @keyframes loaderFadeIn {
@@ -415,10 +497,11 @@ body {
     transform: translateY(0);
   }
 }
-/* Loading no celular */ @media (max-width: 760px) {
+/* Loading no celular */
+@media (max-width: 760px) {
   .catalog-loader::before {
     width: min(620px, 125vw);
-    opacity: .075;
+    opacity: 0.075;
   }
   .loader-content {
     width: min(320px, 84vw);
@@ -433,9 +516,15 @@ body {
     margin-bottom: 28px;
   }
   .loader-text {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     font-size: 10px;
     letter-spacing: 2.4px;
+  }
+  .loader-progress {
+    width: min(235px, 68vw);
+  }
+  .loader-percentage {
+    margin-bottom: 18px;
   }
   .loader-companies {
     gap: 12px;
@@ -449,7 +538,8 @@ body {
        As miniaturas ficam sobrepostas na extrema direita,
        ocupando apenas uma faixa estreita e sem reservar largura
        do leitor.
-    */ main {
+    */
+  main {
     position: relative;
   }
   .reader {
@@ -474,7 +564,10 @@ body {
     height: 100%;
     background: transparent;
     pointer-events: auto;
-    transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+    transition:
+      opacity 0.18s ease,
+      visibility 0.18s ease,
+      transform 0.18s ease;
   }
   .thumb-list {
     align-items: center;
@@ -487,11 +580,13 @@ body {
     min-height: 56px;
     border-radius: 2px;
     border-width: 1px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.20);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   }
   .thumb.active {
     border-width: 2px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.24);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.22),
+      0 2px 6px rgba(0, 0, 0, 0.24);
   }
   .thumb-number {
     top: 2px;
@@ -502,7 +597,8 @@ body {
     border-radius: 7px;
     font-size: 7px;
   }
-  .reader.is-zooming .thumbnails, .reader.is-zoomed .thumbnails {
+  .reader.is-zooming .thumbnails,
+  .reader.is-zoomed .thumbnails {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -512,24 +608,30 @@ body {
        No celular em pé o catálogo é uma página única.
        A faixa central que simulava a dobra não faz sentido aqui
        e criava uma linha escura exatamente no meio da página.
-    */ @media (orientation: portrait) {
-    .flipbook::before, .flipbook::after {
+    */
+  @media (orientation: portrait) {
+    .flipbook::before,
+    .flipbook::after {
       display: none;
     }
   }
 }
 /* ============================================================
    NAVEGAÇÃO POR CLIQUE
-   ============================================================ */ /* Toda a área do leitor indica que pode ser usada para navegar. */ .reader {
+   ============================================================ */ /* Toda a área do leitor indica que pode ser usada para navegar. */
+.reader {
   cursor: pointer;
 }
-/* Mantém o comportamento visual do flipbook enquanto o mouse está sobre ele. */ .flipbook, .catalog-page {
+/* Mantém o comportamento visual do flipbook enquanto o mouse está sobre ele. */
+.flipbook,
+.catalog-page {
   cursor: pointer;
 }
-/* Elementos que possuem ação própria continuam com seus cursores. */ .download, .thumb {
+/* Elementos que possuem ação própria continuam com seus cursores. */
+.download,
+.thumb {
   cursor: pointer;
 }
-
 
 /* ============================================================
    MOBILE FINAL — LEITOR + MINIATURAS
@@ -553,8 +655,8 @@ body {
     width: 100%;
     min-width: 0;
     height: 66px;
-    background: rgba(119,119,119,.97);
-    border-top: 1px solid rgba(255,255,255,.18);
+    background: rgba(119, 119, 119, 0.97);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
   }
   .thumb-list {
     width: 100%;
@@ -588,5 +690,53 @@ body {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+  }
+}
+
+.catalog-seo-heading {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+.catalog-seo-copy {
+  position: absolute; left: 1rem; right: 1rem; top: 3.75rem;
+  z-index: 5; margin: 0 auto; max-width: 900px;
+  font: 500 11px/1.5 Montserrat, Arial, sans-serif;
+  letter-spacing: .02em; text-align: center;
+  color: rgba(255,255,255,.78);
+  pointer-events: none;
+  opacity: .7;
+}
+
+
+
+
+
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+  min-height: 42px;
+  line-height: 1.35;
+  white-space: normal;
+}
+  display: none !important;
+}
+@media (max-width: 760px) {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+  }
+    min-height: 46px;
+    padding-inline: 13px;
+  }
+    width: min(230px, calc(100vw - 20px));
+    max-height: min(56vh, 440px);
+    padding: 8px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+    min-height: 46px;
+    padding: 11px 13px;
   }
 }

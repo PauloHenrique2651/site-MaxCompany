@@ -1,0 +1,31 @@
+# Grupo MaxCompany
+
+> Grupo MaxCompany — suprimentos industriais, segurança, manutenção, materiais técnicos e soluções para operações industriais, offshore e navais.
+
+## Site
+- Página inicial: https://www.grupomaxcompany.com.br/
+- O Grupo: https://www.grupomaxcompany.com.br/empresa.html
+- Soluções: https://www.grupomaxcompany.com.br/produtos.html
+- Indústrias: https://www.grupomaxcompany.com.br/segmentos.html
+- Cases: https://www.grupomaxcompany.com.br/cases.html
+- Contato: https://www.grupomaxcompany.com.br/contato.html
+- Catálogo: https://www.grupomaxcompany.com.br/catalogo/
+
+## Principais áreas
+- Suprimentos industriais
+- EPI e segurança do trabalho
+- Químicos e adesivos industriais
+- Ferramentas e abrasivos
+- Fitas e sinalização
+- Plásticos de engenharia
+- Mangueiras e hidráulica
+- Materiais náuticos e offshore
+
+## Marcas
+- MaxCompany
+- MaxPlast
+- MaxSafety
+- MaxSupply
+
+## Idioma
+O catálogo digital de produtos é apresentado em português (Brasil).
