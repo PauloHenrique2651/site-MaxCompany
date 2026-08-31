@@ -232,9 +232,10 @@ function createThumbnail(pageNumber) {
     number.textContent = pageNumber;
 
     const image = document.createElement('img');
-    image.src = getPageSource(pageNumber);
+    image.src = `thumbs/${String(pageNumber).padStart(3, '0')}.webp`;
     image.alt = `Miniatura da página ${pageNumber}`;
     image.loading = 'lazy';
+    image.decoding = 'async';
     image.draggable = false;
 
     thumbnail.append(number, image);

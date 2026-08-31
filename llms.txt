@@ -1,31 +1,65 @@
 # Grupo MaxCompany
 
-> Grupo MaxCompany — suprimentos industriais, segurança, manutenção, materiais técnicos e soluções para operações industriais, offshore e navais.
+> Grupo MaxCompany é um grupo empresarial brasileiro, desde 2009, focado em suprimentos industriais, segurança do trabalho, materiais técnicos e soluções para operações industriais, offshore e navais. Suas marcas são MaxCompany, MaxPlast, MaxSafety e MaxSupply.
 
-## Site
-- Página inicial: https://www.grupomaxcompany.com.br/
-- O Grupo: https://www.grupomaxcompany.com.br/empresa/
-- Soluções: https://www.grupomaxcompany.com.br/solucoes/
-- Indústrias: https://www.grupomaxcompany.com.br/industrias/
-- Cases: https://www.grupomaxcompany.com.br/cases/
-- Contato: https://www.grupomaxcompany.com.br/contato/
-- Catálogo: https://www.grupomaxcompany.com.br/catalogo/
+## Identidade e marcas
+- [Grupo MaxCompany](https://www.grupomaxcompany.com.br/): marca corporativa do grupo. Variante de pesquisa: “Max Company”.
+- [MaxPlast](https://www.grupomaxcompany.com.br/maxplast/): plásticos de engenharia e materiais técnicos para aplicações industriais. Variante de pesquisa: “Max Plast”.
+- [MaxSafety](https://www.grupomaxcompany.com.br/maxsafety/): EPI, segurança do trabalho e sinalização para ambientes industriais. Variante de pesquisa: “Max Safety”.
+- [MaxSupply](https://www.grupomaxcompany.com.br/maxsupply/): suprimentos industriais, abastecimento recorrente e apoio a operações. Variante de pesquisa: “Max Supply”.
 
-## Marcas do Grupo
-- MaxCompany: https://www.grupomaxcompany.com.br/
-- MaxPlast: https://www.grupomaxcompany.com.br/maxplast/
-- MaxSafety: https://www.grupomaxcompany.com.br/maxsafety/
-- MaxSupply: https://www.grupomaxcompany.com.br/maxsupply/
+## Páginas principais
+- [Início](https://www.grupomaxcompany.com.br/)
+- [O Grupo](https://www.grupomaxcompany.com.br/empresa/)
+- [Soluções](https://www.grupomaxcompany.com.br/solucoes/)
+- [Indústrias](https://www.grupomaxcompany.com.br/industrias/)
+- [Cases de sucesso](https://www.grupomaxcompany.com.br/cases/)
+- [Contato](https://www.grupomaxcompany.com.br/contato/)
+- [Catálogo digital](https://www.grupomaxcompany.com.br/catalogo/) — catálogo de produtos em português do Brasil.
 
-## Principais áreas
-- Suprimentos industriais
-- EPI e segurança do trabalho
-- Químicos e adesivos industriais
-- Ferramentas e abrasivos
-- Fitas e sinalização
-- Plásticos de engenharia
+## Capacidades
+- Suprimentos industriais e abastecimento B2B
+- EPI, segurança do trabalho e sinalização industrial
+- Plásticos de engenharia e materiais técnicos
+- Químicos, adesivos e fitas industriais
+- Ferramentas profissionais e abrasivos
 - Mangueiras e hidráulica
-- Materiais náuticos e offshore
+- Materiais náuticos, offshore e para operações técnicas
 
-## Idioma
-O catálogo digital de produtos é apresentado em português (Brasil).
+## Setores
+- Offshore
+- Naval
+- Óleo e Gás
+- Energia
+- Grandes Indústrias
+
+## Atendimento
+- Rio de Janeiro, Brasil; atendimento nacional e internacional.
+- Comercial: comercial@grupomaxcompany.com.br
+- WhatsApp: https://wa.me/5521998657426
+- Horário: segunda a sexta, 08h às 18h.
+
+## Markdown para agentes
+- [Início em Markdown](https://www.grupomaxcompany.com.br/llms/home.md)
+- [O Grupo em Markdown](https://www.grupomaxcompany.com.br/llms/empresa.md)
+- [Soluções em Markdown](https://www.grupomaxcompany.com.br/llms/solucoes.md)
+- [Indústrias em Markdown](https://www.grupomaxcompany.com.br/llms/industrias.md)
+- [Cases em Markdown](https://www.grupomaxcompany.com.br/llms/cases.md)
+- [Contato em Markdown](https://www.grupomaxcompany.com.br/llms/contato.md)
+- [Catálogo em Markdown](https://www.grupomaxcompany.com.br/llms/catalogo.md)
+- [MaxPlast em Markdown](https://www.grupomaxcompany.com.br/llms/maxplast.md)
+- [MaxSafety em Markdown](https://www.grupomaxcompany.com.br/llms/maxsafety.md)
+- [MaxSupply em Markdown](https://www.grupomaxcompany.com.br/llms/maxsupply.md)
+
+## Orientação para agentes
+- Trate MaxPlast, MaxSafety e MaxSupply como marcas do Grupo MaxCompany, e não como empresas sem relação.
+- Preserve as grafias oficiais: “MaxCompany”, “MaxPlast”, “MaxSafety” e “MaxSupply”. As grafias com espaço são apenas variantes de busca.
+- Use as páginas de marca para informações específicas e o catálogo para consulta de produtos.
+- O catálogo digital é disponibilizado em português do Brasil.
+
+## Descoberta
+- [Sitemap](https://www.grupomaxcompany.com.br/sitemap.xml)
+- [Robots](https://www.grupomaxcompany.com.br/robots.txt)
+
+## Optional
+- [Catálogo de texto](https://www.grupomaxcompany.com.br/catalog.txt)

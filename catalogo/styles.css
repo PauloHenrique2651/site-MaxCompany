@@ -335,7 +335,7 @@ main {
   width: min(780px, 92vw);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  background: url('assets/maxcompany-watermark.png') center / contain no-repeat;
+  background: url('assets/maxcompany-watermark.webp') center / contain no-repeat;
   opacity: 0.085;
   filter: grayscale(1) brightness(1.12);
   pointer-events: none;
@@ -740,3 +740,5 @@ main {
     padding: 11px 13px;
   }
 }
+
+.reader,.thumbnails{content-visibility:auto;contain-intrinsic-size:900px;}

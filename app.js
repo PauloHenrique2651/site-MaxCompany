@@ -151,16 +151,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const heroVideoDesktop = window.matchMedia('(min-width: 761px)');
   heroVideos.forEach(video => {
     const deferredSource = video.querySelector('source[data-src]');
-    if (deferredSource) {
+    if (!heroVideoDesktop.matches) {
+      video.classList.add('video-mobile-poster', 'video-ready');
+    } else if (deferredSource && heroVideoDesktop.matches) {
       const activateVideo = () => {
         if (deferredSource.src) return;
         deferredSource.src = deferredSource.dataset.src;
         video.load();
       };
-      if ('requestIdleCallback' in window) requestIdleCallback(activateVideo, { timeout: 900 });
-      else window.setTimeout(activateVideo, 250);
+      const scheduleVideo = () => {
+        if ('requestIdleCallback' in window) requestIdleCallback(activateVideo, { timeout: 1800 });
+        else window.setTimeout(activateVideo, 900);
+      };
+      if (document.readyState === 'complete') scheduleVideo();
+      else window.addEventListener('load', scheduleVideo, { once: true });
     }
     video.loop = true;
     video.muted = true;

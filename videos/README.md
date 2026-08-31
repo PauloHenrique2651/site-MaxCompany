@@ -1,3 +1,3 @@
 # Vídeo da Hero
 
-`video1.webm` é o vídeo WebM compartilhado pela Hero da Home e das páginas internas.
+A experiência principal utiliza `hero-maxcompany.webm`, carregado de forma adiada no desktop e substituído pelo pôster no mobile.

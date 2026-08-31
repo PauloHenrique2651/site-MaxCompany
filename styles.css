@@ -1459,7 +1459,7 @@ html.home-loading, body.home-loading {
   right: -9vw;
   top: 50%;
   transform: translateY(-50%);
-  background: url("brand/loader/maxcompany-watermark.png") center/contain no-repeat;
+  background: url("brand/loader/maxcompany-watermark.webp") center/contain no-repeat;
   opacity: .055;
   filter: grayscale(1) brightness(1.4);
 }
@@ -3963,3 +3963,9 @@ body {
 @media (max-width:900px){.brand-intro-grid{grid-template-columns:1fr;gap:36px}.brand-solutions-grid{grid-template-columns:1fr}.brand-related-links{grid-template-columns:1fr}.brand-identity-page{min-height:240px;padding:34px 20px}.brand-identity-page img{max-width:220px}}
 
 .brand-name-variants{font-size:15px;line-height:1.6;opacity:.72;margin:0 0 18px}
+
+/* Performance optimizations */
+.catalog-section{content-visibility:auto;contain-intrinsic-size:920px}
+.hero-video,.section-hero-video{background:#050a0f}
+@media (max-width:760px){.hero-video,.section-hero-video{opacity:1!important;display:block}}
+@media (prefers-reduced-motion:reduce){.clients-track{animation:none!important}}
