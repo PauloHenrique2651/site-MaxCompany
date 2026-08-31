@@ -207,9 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /* Resolve internal routes without relying on server rewrites. */
   const resolveLocalRoute = route => {
     const value = String(route || "").trim();
-    if (!value) return "";
-    if (value === "/catalogo" || value === "/catalogo/") return "catalogo/index.html";
-    if (value.startsWith("/")) return location.protocol === "file:" ? value.slice(1) : value;
+    if (value === "/catalogo" || value === "/catalogo/" || value === "catalogo" || value === "catalogo/") return "catalogo/";
+    if (value.startsWith("/")) return value;
     return value;
   };
 
