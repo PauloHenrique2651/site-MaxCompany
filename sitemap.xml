@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/</loc>
-  </url>
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/empresa/</loc>
-  </url>
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/cases/</loc>
-  </url>
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/solucoes/</loc>
-  </url>
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/industrias/</loc>
-  </url>
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/contato/</loc>
-  </url>
-  <url>
-    <loc>https://www.grupomaxcompany.com.br/catalogo/</loc>
-  </url>
+  <url><loc>https://www.grupomaxcompany.com.br/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/empresa/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/cases/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/solucoes/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/industrias/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/contato/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/catalogo/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/maxplast/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/maxsafety/</loc></url>
+  <url><loc>https://www.grupomaxcompany.com.br/maxsupply/</loc></url>
 </urlset>

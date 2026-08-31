@@ -4,12 +4,18 @@
 
 ## Site
 - Página inicial: https://www.grupomaxcompany.com.br/
-- O Grupo: https://www.grupomaxcompany.com.br/empresa.html
-- Soluções: https://www.grupomaxcompany.com.br/produtos.html
-- Indústrias: https://www.grupomaxcompany.com.br/segmentos.html
-- Cases: https://www.grupomaxcompany.com.br/cases.html
-- Contato: https://www.grupomaxcompany.com.br/contato.html
+- O Grupo: https://www.grupomaxcompany.com.br/empresa/
+- Soluções: https://www.grupomaxcompany.com.br/solucoes/
+- Indústrias: https://www.grupomaxcompany.com.br/industrias/
+- Cases: https://www.grupomaxcompany.com.br/cases/
+- Contato: https://www.grupomaxcompany.com.br/contato/
 - Catálogo: https://www.grupomaxcompany.com.br/catalogo/
+
+## Marcas do Grupo
+- MaxCompany: https://www.grupomaxcompany.com.br/
+- MaxPlast: https://www.grupomaxcompany.com.br/maxplast/
+- MaxSafety: https://www.grupomaxcompany.com.br/maxsafety/
+- MaxSupply: https://www.grupomaxcompany.com.br/maxsupply/
 
 ## Principais áreas
 - Suprimentos industriais
@@ -20,12 +26,6 @@
 - Plásticos de engenharia
 - Mangueiras e hidráulica
 - Materiais náuticos e offshore
-
-## Marcas
-- MaxCompany
-- MaxPlast
-- MaxSafety
-- MaxSupply
 
 ## Idioma
 O catálogo digital de produtos é apresentado em português (Brasil).
