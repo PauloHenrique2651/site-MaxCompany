@@ -4146,99 +4146,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Baker Hughes case visual */
-.client-case-baker {
-  position: relative;
-  overflow: hidden;
-}
-.client-case-baker-media {
-  position: relative;
-  min-height: 255px;
-  margin: -32px -32px 28px;
-  overflow: hidden;
-  background: #08141d;
-}
-.client-case-baker-media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 255px;
-  object-fit: cover;
-  transition: transform .55s cubic-bezier(.2,.65,.2,1), filter .55s ease;
-}
-.client-case-baker-overlay {
-  position: absolute;
-  inset: 0;
-  opacity: .2;
-  background: linear-gradient(135deg, #006e6d 0%, #007f7b 34%, #123b5d 68%, #0b1826 100%);
-  mix-blend-mode: multiply;
-  transition: opacity .45s ease;
-}
-.client-case-baker-caption {
-  position: absolute;
-  inset: auto 24px 22px 24px;
-  display: grid;
-  gap: 6px;
-  color: #fff;
-  transform: translateY(10px);
-  opacity: .9;
-  transition: transform .35s ease, opacity .35s ease;
-}
-.client-case-baker-caption span {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .18em;
-  color: #b8e2dc;
-}
-.client-case-baker-caption strong {
-  max-width: 360px;
-  font-size: 22px;
-  line-height: 1.05;
-}
-.client-case-baker:hover .client-case-baker-media img {
-  transform: scale(1.045);
-  filter: saturate(.96) contrast(1.04);
-}
-.client-case-baker:hover .client-case-baker-overlay {
-  opacity: .72;
-}
-.client-case-baker:hover .client-case-baker-caption {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-@media (max-width: 900px) {
-  .contact-form-panel {
-    padding: 28px 24px 30px;
-  }
-  .client-case-baker-media {
-    margin: -24px -20px 24px;
-  }
-}
-@media (max-width: 700px) {
-  .contact-form-panel {
-    padding: 25px 20px 24px;
-    border-radius: 0;
-  }
-  .contact-form-intro h3 {
-    font-size: 34px;
-  }
-  .contact-form-intro .form-helper {
-    font-size: 11px;
-    line-height: 1.65;
-  }
-  .client-case-baker-media {
-    min-height: 210px;
-  }
-  .client-case-baker-media img {
-    min-height: 210px;
-  }
-  .client-case-baker-caption strong {
-    font-size: 19px;
-  }
-}
-
-
 /* ABRASIVOS HOVER VIDEO -------------------------------------------------- */
 .numbered-card-video {
   isolation: isolate;
@@ -4347,3 +4254,127 @@ body {
     opacity: 0 !important;
   }
 }
+
+
+/* CASES VISUAIS — imagem + gradiente de marca no hover */
+.client-case-visual {
+  position: relative;
+  overflow: hidden;
+  --case-gradient: linear-gradient(135deg, rgba(9,28,43,.16), rgba(9,28,43,.88));
+  --case-accent: #dce8ef;
+}
+.client-case-media {
+  position: relative;
+  min-height: 255px;
+  margin: -32px -32px 28px;
+  overflow: hidden;
+  background: #08141d;
+}
+.client-case-media img {
+  display: block;
+  width: 100%;
+  height: 255px;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .58s cubic-bezier(.2,.65,.2,1), filter .58s ease;
+}
+.client-case-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: .18;
+  background: var(--case-gradient);
+  transition: opacity .45s ease, background .45s ease;
+}
+.client-case-caption {
+  position: absolute;
+  inset: auto 24px 22px 24px;
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+  color: #fff;
+  transform: translateY(10px);
+  opacity: .88;
+  transition: transform .35s ease, opacity .35s ease;
+  text-shadow: 0 2px 18px rgba(0,0,0,.28);
+}
+.client-case-caption span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  color: var(--case-accent);
+}
+.client-case-caption strong {
+  max-width: 380px;
+  font-size: 22px;
+  line-height: 1.05;
+}
+.client-case-visual:hover .client-case-media img,
+.client-case-visual:focus-within .client-case-media img {
+  transform: scale(1.05);
+  filter: saturate(1.03) contrast(1.05);
+}
+.client-case-visual:hover .client-case-overlay,
+.client-case-visual:focus-within .client-case-overlay { opacity: .78; }
+.client-case-visual:hover .client-case-caption,
+.client-case-visual:focus-within .client-case-caption {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Gradientes aproximados às identidades visuais de cada cliente */
+.client-case-visual[data-client="grupo-globo"] {
+  --case-gradient: linear-gradient(135deg, rgba(27,79,153,.18) 0%, rgba(23,111,184,.72) 52%, rgba(9,26,56,.94) 100%);
+  --case-accent: #d7eaff;
+}
+.client-case-visual[data-client="sbm-offshore"] {
+  --case-gradient: linear-gradient(135deg, rgba(0,87,145,.18) 0%, rgba(0,143,190,.70) 50%, rgba(3,30,55,.94) 100%);
+  --case-accent: #d7f5ff;
+}
+.client-case-visual[data-client="modec"] {
+  --case-gradient: linear-gradient(135deg, rgba(181,14,46,.16) 0%, rgba(205,27,54,.72) 48%, rgba(55,9,22,.94) 100%);
+  --case-accent: #ffe0e6;
+}
+.client-case-visual[data-client="supervia"] {
+  --case-gradient: linear-gradient(135deg, rgba(16,91,124,.14) 0%, rgba(40,142,161,.68) 48%, rgba(7,34,49,.94) 100%);
+  --case-accent: #dbf8fb;
+}
+.client-case-visual[data-client="baker-hughes"] {
+  --case-gradient: linear-gradient(135deg, rgba(0,110,109,.18) 0%, rgba(0,127,123,.72) 38%, rgba(18,59,93,.88) 72%, rgba(11,24,38,.96) 100%);
+  --case-accent: #b8e2dc;
+}
+.client-case-visual[data-client="jurong"] {
+  --case-gradient: linear-gradient(135deg, rgba(235,177,29,.16) 0%, rgba(224,71,32,.72) 48%, rgba(41,31,24,.94) 100%);
+  --case-accent: #fff0b8;
+}
+.client-case-visual[data-client="mbp"] {
+  --case-gradient: linear-gradient(135deg, rgba(79,91,102,.16) 0%, rgba(54,99,126,.72) 48%, rgba(12,25,36,.95) 100%);
+  --case-accent: #dbe9f2;
+}
+.client-case-visual[data-client="seatrium"] {
+  --case-gradient: linear-gradient(135deg, rgba(32,72,142,.16) 0%, rgba(39,101,180,.70) 46%, rgba(6,35,71,.95) 100%);
+  --case-accent: #dcecff;
+}
+
+.client-case-logo-visual .client-case-media {
+  background: linear-gradient(135deg, #f7f9fb, #e9eef3);
+}
+.client-case-logo-visual .client-case-media img {
+  object-fit: contain;
+  padding: 58px 70px;
+  box-sizing: border-box;
+}
+.client-case-logo-visual:hover .client-case-media img { transform: scale(1.035); }
+
+@media (max-width: 900px) {
+  .client-case-media { margin: -24px -20px 24px; }
+}
+@media (max-width: 700px) {
+  .client-case-media { min-height: 210px; }
+  .client-case-media img { height: 210px; }
+  .client-case-caption strong { font-size: 19px; }
+  .client-case-logo-visual .client-case-media img { padding: 45px 52px; }
+  /* Sem hover real no touch: mantém o gradiente legível e estável. */
+  .client-case-overlay { opacity: .52; }
+  .client-case-caption { transform: none; opacity: 1; }
+}
+

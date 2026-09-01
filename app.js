@@ -137,12 +137,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* One shared 20-second WebM across the whole experience.
      The current playback position survives navigation between the static pages. */
-  const heroVideos = [
-    ...document.querySelectorAll("[data-hero-video]"),
-    ...document.querySelectorAll(".section-hero-video")
-  ];
+  const heroVideos = [...document.querySelectorAll('[data-shared-hero="true"], [data-hero-video], .section-hero-video')];
 
   const STORAGE_KEY = "maxcompany-shared-hero-time";
+
+  /* Shared hero source: every main section/page must use the same video. */
+  heroVideos.forEach(video => {
+    const source = video.querySelector("source");
+    if (!source) return;
+    const isNestedPage = window.location.pathname.split("/").filter(Boolean).length > 1;
+    const sharedSrc = isNestedPage ? "../videos/hero-max-nova-v2.webm" : "videos/hero-max-nova-v2.webm";
+    if (!source.getAttribute("src") || !source.getAttribute("src").includes("hero-max-nova-v2.webm")) {
+      source.setAttribute("src", sharedSrc);
+      try { video.load(); } catch (_) {}
+    }
+  });
+
 
   function saveHeroVideoTime() {
     const video = heroVideos[0];
