@@ -1006,3 +1006,46 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
 });
+
+
+
+/* Abrasivos: o CARD inteiro é a área interativa */
+document.addEventListener('DOMContentLoaded', function () {
+  const canHover = window.matchMedia &&
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!canHover) return;
+
+  document.querySelectorAll('.numbered-card-video').forEach(function (card) {
+    const video = card.querySelector('.numbered-card-video-media');
+    if (!video) return;
+
+    let loaded = false;
+    const ensureLoaded = function () {
+      if (loaded) return;
+      loaded = true;
+      try { video.load(); } catch (e) {}
+    };
+
+    const play = function () {
+      ensureLoaded();
+      try {
+        const promise = video.play();
+        if (promise && typeof promise.catch === 'function') {
+          promise.catch(function () {});
+        }
+      } catch (e) {}
+    };
+
+    const stop = function () {
+      try {
+        video.pause();
+        video.currentTime = 0;
+      } catch (e) {}
+    };
+
+    card.addEventListener('mouseenter', play);
+    card.addEventListener('mouseleave', stop);
+    card.addEventListener('focusin', play);
+    card.addEventListener('focusout', stop);
+  });
+});
