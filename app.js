@@ -365,6 +365,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* Group specialty cards: only the clicked card stays open. */
   const specialtyCards = Array.from(document.querySelectorAll(".group-specialty"));
+
+  /* Brand logos throughout the site open O Grupo with their matching card.
+     This keeps the destination consistent on the home page and every footer. */
+  const appScript = document.querySelector('script[src$="app.js"]');
+  const groupPage = appScript && (appScript.getAttribute("src") || "").startsWith("../") ? "../empresa/" : "empresa/";
+  const brandTargets = {
+    maxplast: "maxplast",
+    maxsafety: "maxsafety",
+    maxsupply: "maxsupply"
+  };
+  document.querySelectorAll("a.brand-logo-link, a.footer-brand-link").forEach(link => {
+    const logo = link.querySelector("img[alt]");
+    const brand = logo ? logo.alt.toLowerCase().replace(/\s+/g, "") : "";
+    if (!brandTargets[brand]) return;
+    link.href = `${groupPage}?marca=${brandTargets[brand]}`;
+  });
+
   specialtyCards.forEach(card => {
     const summary = card.querySelector("summary");
     if (!summary) return;
