@@ -1028,6 +1028,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.numbered-card-video').forEach(function (card) {
     const video = card.querySelector('.numbered-card-video-media');
     if (!video) return;
+    const previewDuration = Number(card.dataset.previewDuration) || 10;
 
     let loaded = false;
     const ensureLoaded = function () {
@@ -1052,6 +1053,12 @@ document.addEventListener('DOMContentLoaded', function () {
         video.currentTime = 0;
       } catch (e) {}
     };
+
+    video.addEventListener('timeupdate', function () {
+      if (video.currentTime >= previewDuration) {
+        try { video.currentTime = 0; } catch (e) {}
+      }
+    });
 
     card.addEventListener('mouseenter', play);
     card.addEventListener('mouseleave', stop);
