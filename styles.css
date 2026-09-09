@@ -3764,9 +3764,13 @@ body{top:0!important}
   box-shadow: 0 12px 28px rgba(0,0,0,.12);
 }
 .floating-whatsapp::after {
-  content: '↗';
-  font-size: 14px;
-  line-height: 1;
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: 2px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateY(-1px);
   opacity: .8;
 }
 .floating-whatsapp:focus-visible,
