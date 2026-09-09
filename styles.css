@@ -3020,6 +3020,10 @@ body {
   padding-bottom: 25px;
   border-bottom: 1px solid #e1e6e9;
 }
+.client-case-visual .client-case-head {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
 .client-case-index {
   display: block;
   margin-bottom: 18px;
@@ -4357,6 +4361,9 @@ body {
 .client-case-visual[data-client="baker-hughes"] {
   --case-gradient: linear-gradient(135deg, rgba(0,110,109,.18) 0%, rgba(0,127,123,.72) 38%, rgba(18,59,93,.88) 72%, rgba(11,24,38,.96) 100%);
   --case-accent: #b8e2dc;
+}
+.client-case-visual[data-client="baker-hughes"] .client-case-media img {
+  object-position: center 24%;
 }
 .client-case-visual[data-client="jurong"] {
   --case-gradient: linear-gradient(135deg, rgba(235,177,29,.16) 0%, rgba(224,71,32,.72) 48%, rgba(41,31,24,.94) 100%);
